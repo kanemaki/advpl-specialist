@@ -6,7 +6,7 @@ Complete mapping reference for converting ADVPL procedural constructs to their T
 
 | ADVPL | TLPP | Notes |
 |-------|------|-------|
-| `#Include "Protheus.ch"` | `#Include "tlpp-core.th"` | Main TLPP include; do NOT add `using namespace tlpp.core/tlpp.log` -- those are NOT replacements for includes |
+| `#Include "TOTVS.CH"` | `#Include "tlpp-core.th"` | Main TLPP include; `Protheus.ch` is obsolete, use `TOTVS.CH` for `.prw` files. Do NOT add `using namespace tlpp.core/tlpp.log` -- those are NOT replacements for includes |
 | `#Include "TopConn.ch"` | `#Include "tlpp-core.th"` | Database connectivity is available via tlpp-core.th |
 | `#Include "RestFul.ch"` | `#Include "tlpp-rest.th"` | For REST with TLPP annotations (`@RestService`, `@Get`, `@Post`) |
 | `#Include "FWMVCDef.ch"` | `#Include "tlpp-core.th"` | MVC framework functions available via tlpp-core.th |
@@ -16,7 +16,7 @@ Complete mapping reference for converting ADVPL procedural constructs to their T
 
 **Notes:**
 - In TLPP, use the specific `.th` includes instead of the `.ch` ADVPL includes:
-  - `#Include "tlpp-core.th"` -- main include for TLPP (replaces Protheus.ch, TopConn.ch)
+  - `#Include "tlpp-core.th"` -- main include for TLPP (replaces TOTVS.CH/Protheus.ch, TopConn.ch)
   - `#Include "tlpp-rest.th"` -- for REST annotations (@RestService, @Get, @Post)
   - `#Include "tlpp-object.th"` -- for advanced object features
   - `#Include "tlpp-probat.th"` -- for automated testing (ProBat framework)
@@ -81,7 +81,7 @@ Start with `custom.`, the rest is free. Examples: `custom.cadastros.cliente`, `c
 
 ```advpl
 // Original .prw file -- preserved as wrapper
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function OriginalName(cParam1, nParam2)
     Local oService := custom.mymodule.OriginalNameService():new()

@@ -62,7 +62,7 @@ Patterns and templates for generating clean, standardized ADVPL and TLPP code fo
 Every User Function MUST follow this pattern:
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 #Include "TopConn.ch"
 
 /*/{Protheus.doc} FATA001
@@ -159,5 +159,5 @@ ErrorBlock(bErrorOld)
 | Missing error handling | Always use Begin Sequence / Recover / End Sequence |
 | Not closing RecLock | Always use MsUnlock() after RecLock() |
 | Hardcoded branch (filial) | Use xFilial(cAlias) for multi-branch compatibility |
-| Missing Protheus.ch include | Always include at minimum: #Include "Protheus.ch" |
+| Missing TOTVS.CH include | Always include at minimum: #Include "TOTVS.CH" |
 | Not validating function parameters | Check ValType() and empty values at function start |

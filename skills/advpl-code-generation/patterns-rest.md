@@ -11,7 +11,7 @@ The `WsRestFul` approach uses class declarations to define REST services. This i
 ### 1.1 Service Declaration
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 #Include "RestFul.ch"
 
 /*/{Protheus.doc} CUSTOMERS

@@ -88,7 +88,7 @@ Protheus REST supports HTTP Basic Authentication by default when `Security=1` is
 
 ```advpl
 // Client-side: calling Protheus REST with Basic Auth
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function CallWithAuth()
     Local cUrl    := "http://localhost:8282/rest/myservice"
@@ -114,7 +114,7 @@ Return
 Protheus supports token-based authentication through the `/api/oauth2/v1/token` endpoint:
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function GetToken()
     Local cUrl      := "http://localhost:8282/rest/api/oauth2/v1/token"
@@ -143,7 +143,7 @@ Return
 ### Using a Token in Subsequent Requests
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function CallWithToken()
     Local cUrl      := "http://localhost:8282/rest/api/v1/customers"
@@ -171,7 +171,7 @@ The WsRestFul approach uses the `RestFul.ch` include and class-based declaration
 ### Service Declaration
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 #Include "RestFul.ch"
 
 WsRestFul CustomerService Description "Customer CRUD Service" Format APPLICATION_JSON
@@ -814,7 +814,7 @@ FWRestModel provides automatic CRUD operations based on existing MVC models, sig
 ### Basic FWRestModel Setup
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 #Include "RestFul.ch"
 #Include "FWMVCDef.ch"
 
@@ -945,7 +945,7 @@ The `JsonObject` class is the primary way to work with JSON in ADVPL/TLPP.
 #### Creating JSON
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function JsonCreate()
     Local oJson := JsonObject():New()
@@ -967,7 +967,7 @@ Return
 #### Parsing JSON
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function JsonParse()
     Local oJson   := JsonObject():New()
@@ -991,7 +991,7 @@ Return
 #### Working with Nested JSON
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function JsonNested()
     Local oJson    := JsonObject():New()
@@ -1024,7 +1024,7 @@ Return
 #### Arrays in JSON
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function JsonArrays()
     Local oJson  := JsonObject():New()
@@ -1068,7 +1068,7 @@ Return
 `FWJsonDeserialize` converts a JSON string into a structured ADVPL hash map.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function JsonDeserialize()
     Local cJson   := '{"customer":{"name":"TOTVS","items":[1,2,3]}}'
@@ -1088,7 +1088,7 @@ Return
 `FWJsonSerialize` converts ADVPL objects/arrays into JSON strings.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function JsonSerialize()
     Local aData    := {}
@@ -1112,7 +1112,7 @@ Return
 ### HttpGet
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function CallGet()
     Local cUrl      := "https://api.example.com/users"
@@ -1133,7 +1133,7 @@ Return
 ### HttpPost
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function CallPost()
     Local cUrl      := "https://api.example.com/users"
@@ -1162,7 +1162,7 @@ Return
 `FWCallRest` is the recommended class for making external HTTP calls in Protheus.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function ExternalAPI()
     Local oRest     := FWCallRest():New()
@@ -1219,7 +1219,7 @@ Return
 When calling HTTPS endpoints, you may need to configure certificates:
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function SecureCall()
     Local oRest := FWCallRest():New()
@@ -1250,7 +1250,7 @@ Return
 ### Handling Timeouts
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function TimeoutExample()
     Local oRest := FWCallRest():New()
@@ -1331,7 +1331,7 @@ self:setResponse('{"code":"NOT_FOUND","message":"Resource not found"}')
 A reusable error handler for REST services:
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 Static Function RestError(oSelf, nStatus, cCode, cMessage, aDetails)
     Local oJson    := JsonObject():New()

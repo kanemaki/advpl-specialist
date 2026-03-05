@@ -20,7 +20,7 @@ Key characteristics:
 
 Required includes:
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 #Include "FWMVCDef.ch"
 ```
 
@@ -388,7 +388,7 @@ Return oView
 Full working MVC for a custom orders (ZA1) and order items (ZA2) structure.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 #Include "FWMVCDef.ch"
 
 /*/{Protheus.doc} FATA090
@@ -582,7 +582,7 @@ Return oView
 ### 6.1 Include Operation
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 #Include "FWMVCDef.ch"
 
 User Function IncPedAuto()

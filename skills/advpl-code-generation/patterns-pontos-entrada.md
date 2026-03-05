@@ -43,7 +43,7 @@ EndIf
 Standard template for any entry point:
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} ENTRY_POINT_NAME
 Descricao do ponto de entrada
@@ -81,7 +81,7 @@ Return lRet
 **Return:** Logical - `.T.` allows the operation, `.F.` blocks it.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} MT120LOK
 Validacao do pedido de compra
@@ -119,7 +119,7 @@ Return lRet
 **Return:** Logical - `.T.` allows cancellation, `.F.` blocks it.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} MT120CAN
 Tratamento no cancelamento do pedido de compra
@@ -158,7 +158,7 @@ Return lRet
 **Return:** Nil (no return value expected).
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} A120GRVC
 Pos-gravacao do pedido de compra
@@ -198,7 +198,7 @@ Return Nil
 **Return:** Logical - `.T.` allows, `.F.` blocks.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} MT100LOK
 Validacao da nota fiscal de saida
@@ -240,7 +240,7 @@ Return lRet
 **Return:** Nil.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} SF2100I
 Pos-inclusao da nota fiscal de saida
@@ -277,7 +277,7 @@ Return Nil
 **Return:** Array of menu options `{cTitle, cFunction, nReserved, nOperation}`.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} A103MENU
 Adiciona opcoes de menu no faturamento
@@ -306,7 +306,7 @@ Return aMenu
 **Return:** Array of button definitions `{nType, {bAction}, cTooltip, cBitmap}`.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} MA410BUT
 Botoes adicionais no pedido de venda
@@ -338,7 +338,7 @@ Return aButtons
 **Return:** Logical - `.T.` allows, `.F.` blocks.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} MA410LOK
 Validacao do pedido de venda
@@ -380,7 +380,7 @@ Return lRet
 **Return:** Array of button definitions.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} FA080BUT
 Botoes adicionais no contas a pagar
@@ -414,7 +414,7 @@ Return aButtons
 **Return:** Nil.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} FA080INC
 Pos-inclusao de titulo no contas a pagar
@@ -451,7 +451,7 @@ Return Nil
 **Return:** Array of button definitions.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} FA050BUT
 Botoes adicionais no contas a receber
@@ -486,7 +486,7 @@ Return aButtons
 **Return:** Logical - `.T.` allows, `.F.` blocks.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} MT250LOK
 Validacao da movimentacao de estoque
@@ -530,7 +530,7 @@ Return lRet
 **Return:** Nil.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} A650GRVS
 Pos-gravacao da solicitacao de compra
@@ -572,7 +572,7 @@ Return Nil
 **Return:** Character - Modified record line, or empty string to remove the record.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} SPEDCONTRIB
 Customizacao do SPED Contribuicoes
@@ -610,7 +610,7 @@ Return cLinha
 **Return:** Logical - `.T.` allows, `.F.` blocks.
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 /*/{Protheus.doc} MT930LOK
 Validacao do livro fiscal

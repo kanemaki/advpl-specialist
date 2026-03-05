@@ -69,7 +69,7 @@ Before delivering any generated code, verify:
 - [ ] All variables declared as Local (no Private/Public)
 - [ ] Hungarian notation on all variable names
 - [ ] Protheus.doc header with @type, @author, @since, @param, @return
-- [ ] #Include "Protheus.ch" present (for .prw files)
+- [ ] #Include "TOTVS.CH" present (for .prw files)
 - [ ] Error handling with Begin Sequence / Recover / End Sequence
 - [ ] GetArea() / RestArea() around database operations
 - [ ] xFilial() used for alias filtering

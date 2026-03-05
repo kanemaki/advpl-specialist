@@ -250,7 +250,7 @@ EndSQL
 ## Complete Pattern: Query with Cursor Iteration
 
 ```advpl
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 #Include "TopConn.ch"
 
 User Function QueryEx()

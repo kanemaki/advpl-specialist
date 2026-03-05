@@ -116,7 +116,7 @@ cMsg := "Value: " + cValToChar(100)
 // Verify file exists in the includes directory
 // Check the includes path in your project configuration
 // Standard includes are always available:
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 #Include "TopConn.ch"
 #Include "FWMVCDef.ch"
 ```
@@ -206,11 +206,11 @@ Local cNome := ""
 cNome := SA1->A1_NOME
 ```
 
-### 13. Missing #Include "Protheus.ch"
+### 13. Missing #Include "TOTVS.CH"
 
 **Error Message:** `Undefined symbol 'PSAY'` or `Syntax error` on standard macros
 
-**Cause:** Protheus.ch defines essential preprocessor macros (@ ... SAY, @ ... GET, DEFINE DIALOG, etc.). Without it, these commands are not recognized.
+**Cause:** TOTVS.CH (formerly Protheus.ch, which is now obsolete) defines essential preprocessor macros (@ ... SAY, @ ... GET, DEFINE DIALOG, etc.). Without it, these commands are not recognized.
 
 **Solution:**
 ```advpl
@@ -220,7 +220,7 @@ User Function FATA001()
 Return
 
 // FIXED - always include as first line
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 
 User Function FATA001()
     @ 10,10 Say "Hello"
@@ -259,7 +259,7 @@ Class MyService
 EndClass
 
 // Consumer file
-#Include "Protheus.ch"
+#Include "TOTVS.CH"
 Using Namespace mycompany.services
 
 User Function TestSvc()
@@ -1082,7 +1082,7 @@ oRest:SetSslVerify(.F.)  // DANGER: disables all SSL verification
 | 10 | Missing RETURN | Compilation |
 | 11 | Invalid character in source | Compilation |
 | 12 | Ambiguous reference | Compilation |
-| 13 | Missing Protheus.ch | Compilation |
+| 13 | Missing TOTVS.CH | Compilation |
 | 14 | Invalid preprocessor directive | Compilation |
 | 15 | Class/Method not found (TLPP) | Compilation |
 | 16 | Variable does not exist | Runtime |
