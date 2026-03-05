@@ -56,7 +56,7 @@ digraph migration {
 
 | ADVPL Construct | TLPP Equivalent | Notes |
 |----------------|-----------------|-------|
-| `#Include "TOTVS.CH"` | `#Include "tlpp-core.th"` | Use the TLPP-specific includes (`.th` files); `Protheus.ch` is obsolete. Do NOT add `using namespace tlpp.core` or `tlpp.log` -- those are NOT replacements for includes |
+| `#Include "TOTVS.CH"` | `#Include "tlpp-core.th"` | Use the TLPP-specific includes (`.th` files); `Protheus.ch` is obsolete. Do NOT add `using namespace tlpp.core`, `tlpp.rest`, or `tlpp.log` -- use the `.th` includes instead |
 | `User Function Name()` | `namespace custom.module.service; class NameService; method execute()` | Main entry point becomes the primary public method. See namespace conventions below |
 | `Static Function Helper()` | `method helper() as private` | Internal functions become private methods |
 | `Private cVar := "x"` | `data cVar as character` (class property) | Private variables become class-level data declarations |

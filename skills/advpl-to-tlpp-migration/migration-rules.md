@@ -6,7 +6,7 @@ Complete mapping reference for converting ADVPL procedural constructs to their T
 
 | ADVPL | TLPP | Notes |
 |-------|------|-------|
-| `#Include "TOTVS.CH"` | `#Include "tlpp-core.th"` | Main TLPP include; `Protheus.ch` is obsolete, use `TOTVS.CH` for `.prw` files. Do NOT add `using namespace tlpp.core/tlpp.log` -- those are NOT replacements for includes |
+| `#Include "TOTVS.CH"` | `#Include "tlpp-core.th"` | Main TLPP include; `Protheus.ch` is obsolete, use `TOTVS.CH` for `.prw` files. Do NOT add `using namespace tlpp.core`, `tlpp.rest`, `tlpp.log` -- use the `.th` includes instead |
 | `#Include "TopConn.ch"` | `#Include "tlpp-core.th"` | Database connectivity is available via tlpp-core.th |
 | `#Include "RestFul.ch"` | `#Include "tlpp-rest.th"` | For REST with TLPP annotations (`@RestService`, `@Get`, `@Post`) |
 | `#Include "FWMVCDef.ch"` | `#Include "tlpp-core.th"` | MVC framework functions available via tlpp-core.th |
@@ -20,7 +20,7 @@ Complete mapping reference for converting ADVPL procedural constructs to their T
   - `#Include "tlpp-rest.th"` -- for REST annotations (@RestService, @Get, @Post)
   - `#Include "tlpp-object.th"` -- for advanced object features
   - `#Include "tlpp-probat.th"` -- for automated testing (ProBat framework)
-- Do NOT use `using namespace tlpp.core`, `tlpp.log`, `tlpp.data`, etc. as replacements for includes. Those are NOT include replacements -- they are namespace imports that are rarely needed.
+- Do NOT use `using namespace tlpp.core`, `tlpp.rest`, `tlpp.log`, `tlpp.data`, etc. Those are NOT needed -- always use the `.th` includes instead.
 - Only add the project's own `namespace` declaration following the official TOTVS convention (see Namespace Conventions below).
 - `#Define` constants used only within a class can become `static data` properties. Constants shared across files should remain as `#define` in a shared `.ch` file.
 

@@ -62,8 +62,7 @@ Create the TLPP class structure and convert all functions.
 
 - [ ] Replace ADVPL `.ch` includes with TLPP `.th` includes: `#Include "tlpp-core.th"` (main), `#Include "tlpp-rest.th"` (REST annotations), `#Include "tlpp-object.th"` (advanced objects)
 - [ ] Add the `namespace` declaration for the project (e.g., `namespace custom.faturamento.pedido`)
-- [ ] Do NOT add `using namespace tlpp.core`, `tlpp.log`, `tlpp.data`, etc. unless the code explicitly uses classes from those namespaces
-- [ ] Only add `using namespace tlpp.rest` if using TLPP REST annotations (`@RestService`, `@Get`, `@Post`)
+- [ ] Do NOT add `using namespace tlpp.core`, `tlpp.log`, `tlpp.rest`, `tlpp.data`, etc. -- these are NOT needed; use the `.th` includes instead
 
 ### Backward Compatibility Wrapper
 

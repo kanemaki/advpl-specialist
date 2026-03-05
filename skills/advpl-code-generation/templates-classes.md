@@ -390,8 +390,8 @@ Namespaces organize classes and avoid name conflicts.
 // Declaring a namespace
 namespace custom.vendas
 
-// using namespace is only needed when using classes from external namespaces
-// Example: using namespace tlpp.rest (only for @RestService annotations)
+// For REST annotations, add: #Include "tlpp-rest.th"
+// Do NOT use "using namespace tlpp.rest" -- use the include instead
 
 /*/{Protheus.doc} PedidoService
 Servico de pedidos de venda
