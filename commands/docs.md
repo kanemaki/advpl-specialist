@@ -1,6 +1,6 @@
 ---
 description: Look up Protheus documentation - native functions, SX data dictionary, REST APIs, MV parameters, and framework reference
-allowed-tools: Read, Glob, Grep, WebSearch, WebFetch
+allowed-tools: Read, Glob, Grep, Bash, Agent, Skill, WebSearch, WebFetch
 argument-hint: "<term> [--source tdn|local] [--type function|sx|api|param]"
 ---
 

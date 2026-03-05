@@ -1,6 +1,6 @@
 ---
 description: Diagnose errors and problems in ADVPL/TLPP code - compilation errors, runtime errors, performance issues, and log analysis
-allowed-tools: Read, Glob, Grep, Agent, WebSearch, WebFetch
+allowed-tools: Read, Glob, Grep, Bash, Agent, Skill, WebSearch, WebFetch
 argument-hint: "<file|error-message> [--log logfile]"
 ---
 
