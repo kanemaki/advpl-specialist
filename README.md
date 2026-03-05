@@ -34,6 +34,15 @@ claude --plugin-dir ./advpl-specialist
 
 O plugin detecta automaticamente projetos Protheus (`.prw`, `.tlpp`, `.prx`, `.ch`) ao iniciar uma sessao.
 
+### Plugin recomendado: superpowers
+
+Para uma experiencia completa, recomendamos instalar o plugin oficial **superpowers** que adiciona skills de planejamento, brainstorming, debugging sistematico e code review:
+
+```bash
+/plugin marketplace add anthropics/claude-code-plugins
+/plugin install superpowers@anthropics-claude-code-plugins
+```
+
 ## Commands
 
 | Comando | Descricao |
