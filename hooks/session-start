@@ -28,4 +28,13 @@ if [ "$FOUND" -eq 1 ]; then
     echo "  /advpl-specialist:migrate   - Migrate ADVPL to TLPP"
     echo "  /advpl-specialist:diagnose  - Diagnose errors"
     echo "  /advpl-specialist:docs      - Look up documentation"
+
+    # Check if superpowers plugin is installed
+    SUPERPOWERS_DIR="$HOME/.claude/plugins/cache/claude-plugins-official/superpowers"
+    if [ ! -d "$SUPERPOWERS_DIR" ]; then
+        echo ""
+        echo "Recommended: Install the 'superpowers' plugin for better planning, debugging and code review:"
+        echo "  /plugin marketplace add anthropics/claude-code-plugins"
+        echo "  /plugin install superpowers@anthropics-claude-code-plugins"
+    fi
 fi
