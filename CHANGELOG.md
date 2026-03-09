@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-03-09
+
+### Added
+- Playwright MCP fallback for all web documentation access (agents: docs-reference, debugger, code-generator; skill: protheus-reference)
+- When WebSearch or WebFetch fails, agents now fall back to Playwright browser tools (browser_navigate, browser_snapshot, browser_take_screenshot)
+- Hybrid approach: tries text snapshot first, falls back to screenshot for complex visual content
+- Playwright MCP installation recommendation in session-start hook
+
 ## [1.0.1] - 2026-03-05
 
 ### Added

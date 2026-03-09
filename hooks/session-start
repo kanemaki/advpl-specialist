@@ -37,4 +37,11 @@ if [ "$FOUND" -eq 1 ]; then
         echo "  /plugin marketplace add anthropics/claude-code-plugins"
         echo "  /plugin install superpowers@anthropics-claude-code-plugins"
     fi
+
+    # Check if Playwright MCP is available (used as fallback for web documentation access)
+    if ! claude mcp list 2>/dev/null | grep -q "playwright"; then
+        echo ""
+        echo "Recommended: Install the 'playwright' MCP server for reliable documentation access (fallback when WebFetch/WebSearch fail):"
+        echo "  claude mcp add playwright -- npx @anthropic-ai/mcp-playwright@latest"
+    fi
 fi
