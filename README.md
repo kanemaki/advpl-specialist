@@ -71,7 +71,15 @@ claude --plugin-dir ./advpl-specialist
 
 O plugin detecta automaticamente projetos Protheus (`.prw`, `.tlpp`, `.prx`, `.ch`) ao iniciar uma sessao.
 
-### Plugin recomendado: superpowers
+### Recomendado: Playwright MCP
+
+O plugin utiliza o **Playwright MCP** como fallback quando o acesso direto a documentacao (WebSearch/WebFetch) falha. Com ele, o plugin abre a pagina em um navegador real para extrair o conteudo:
+
+```bash
+claude mcp add playwright -- npx @anthropic-ai/mcp-playwright@latest
+```
+
+### Recomendado: Plugin superpowers
 
 Para uma experiencia completa, recomendamos instalar o plugin oficial **superpowers** que adiciona skills de planejamento, brainstorming, debugging sistematico e code review:
 
