@@ -24,12 +24,16 @@ Plugin para Claude Code especializado em **ADVPL** e **TLPP** para desenvolvimen
 
 ## Quick Start
 
+Repositorio: [https://github.com/thalysjuvenal/advpl-specialist](https://github.com/thalysjuvenal/advpl-specialist)
+
 ```bash
-# 1. Instale o plugin
+# 1. Adicione o marketplace do plugin (dentro do Claude Code)
 /plugin marketplace add thalysjuvenal/advpl-specialist
+
+# 2. Instale o plugin
 /plugin install advpl-specialist@thalysjuvenal-advpl-specialist
 
-# 2. Abra um projeto Protheus e use os comandos
+# 3. Abra um projeto Protheus e use os comandos
 /advpl-specialist:generate function FATA050 --module FAT
 /advpl-specialist:diagnose "Variable does not exist: cCodCli"
 /advpl-specialist:docs FWExecView
