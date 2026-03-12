@@ -328,8 +328,6 @@ Armazena os registros de contagem de inventario e saldos iniciais de produtos. U
 | MV_ARQPROD | Habilita uso da SBZ (indicadores por filial) em vez dos campos da SB1 |
 | MV_RASTRO | Ativa rastreabilidade global por lote/sublote |
 | MV_LOCALIZ | Ativa controle de enderecamento de estoque |
-| MV_PRODDUP | Permite produto duplicado (S/N) |
-| MV_CODBAR | Valida codigo de barras com digito verificador |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -359,7 +357,6 @@ Armazena os registros de contagem de inventario e saldos iniciais de produtos. U
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_ULMES | Data do ultimo fechamento de estoque (mes anterior) |
-| MV_DESSION | Data do ultimo acerto de inventario |
 | MV_LOCALIZ | Habilita controle por endereco |
 | MV_RASTRO | Habilita rastreabilidade por lote/sublote |
 
@@ -386,8 +383,6 @@ Armazena os registros de contagem de inventario e saldos iniciais de produtos. U
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_TMPAD | Tipo de movimentacao padrao para acerto de inventario |
-| MV_CESSION | Centro de custo para lancamento do acerto |
-| MV_CONTDEP | Conta contabil para depreciacao/ajuste |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -412,13 +407,9 @@ Armazena os registros de contagem de inventario e saldos iniciais de produtos. U
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_SUBTM | Habilita substituicao do tipo de movimentacao |
 | MV_TMPAD | Tipo de movimentacao padrao |
-| MV_TESSION | TM padrao para transferencia |
-| MV_ESESSION | Emite solicitacao de compra automatica ao atingir estoque minimo |
 | MV_LOCPROC | Local padrao para processamento |
-| MV_ARESSION | Armazem padrao de requisicao |
-| MV_QTDNEG | Permite saldo negativo em estoque (S/N) |
+| MV_ESTNEG | Permite saldo negativo em estoque (S/N) |
 | MV_CMDBLQV | Bloqueia movimentacao quando produto esta bloqueado |
 
 **Pontos de entrada:**
@@ -473,8 +464,7 @@ Armazena os registros de contagem de inventario e saldos iniciais de produtos. U
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_TESSION | TM padrao para transferencia |
-| MV_QTDNEG | Permite saldo negativo (S/N) |
+| MV_ESTNEG | Permite saldo negativo (S/N) |
 | MV_LOCALIZ | Habilita controle de enderecamento |
 
 **Pontos de entrada:**
@@ -528,7 +518,6 @@ Armazena os registros de contagem de inventario e saldos iniciais de produtos. U
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_TMPAD | Tipo de movimentacao padrao |
-| MV_SALREQ | Verifica saldo ao solicitar material |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -572,10 +561,7 @@ Armazena os registros de contagem de inventario e saldos iniciais de produtos. U
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_CUSMED | Metodo de custeio (1=Medio, 2=Standard, 3=Ultimo Preco, 4=FIFO) |
-| MV_MOTEFET | Define se movimentacao efetiva ou por ordem |
-| MV_PRECAUT | Recalculo automatico de custo |
 | MV_ULMES | Mes de referencia do fechamento |
-| MV_DATREF | Data de referencia para calculo |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -732,7 +718,7 @@ Solicitacao ao Armazem (MATA105/SCP) → Aprovacao → Separacao → Movimentaca
 
 | Validacao | Descricao |
 |-----------|-----------|
-| Saldo negativo | Por padrao, nao permite saldo negativo em estoque. Controlado pelo parametro `MV_QTDNEG` |
+| Saldo negativo | Por padrao, nao permite saldo negativo em estoque. Controlado pelo parametro `MV_ESTNEG` |
 | Produto bloqueado | Nao permite movimentacao de produto com B1_MSBLQL = "1" (parametro `MV_CMDBLQV`) |
 | Inventario em andamento | Produto com B2_SESSION = "I" nao permite movimentacao ate o desbloqueio |
 | Rastreabilidade | Se B1_RASTRO = "L" ou "S", obriga informar lote/sublote em toda movimentacao |
@@ -797,7 +783,7 @@ Solicitacao ao Armazem (MATA105/SCP) → Aprovacao → Separacao → Movimentaca
 | **Quando** | Na emissao da NF de saida (MATA461) |
 | **O que acontece** | O faturamento gera movimentacao de saida na SD3, debita saldo na SB2. O custo de saida e calculado conforme metodo de custeio (MV_CUSMED). Se o produto tem rastreabilidade, debita o lote especifico na SB8. O pedido de venda (SC5/SC6) tem saldo atendido atualizado |
 | **Tabelas afetadas** | SD3 (movimentacao saida), SB2 (saldo), SB8 (lote), SD2 (itens NF saida) |
-| **Controles** | TES define se atualiza estoque. Nao permite faturar se saldo insuficiente (a menos que MV_QTDNEG = "S") |
+| **Controles** | TES define se atualiza estoque. Nao permite faturar se saldo insuficiente (a menos que MV_ESTNEG = "S") |
 
 ### Estoque <-> PCP (Producao)
 
@@ -815,7 +801,7 @@ Solicitacao ao Armazem (MATA105/SCP) → Aprovacao → Separacao → Movimentaca
 | **Quando** | No recalculo do custo medio (MATA330) e em movimentacoes com contabilizacao on-line |
 | **O que acontece** | Gera lancamentos contabeis na CT2 debitando/creditando contas de estoque, custos, producao e consumo conforme o tipo de movimentacao e o Lancamento Padrao (CT5) configurado na TES ou no TM |
 | **Tabelas afetadas** | CT2 (Lancamentos Contabeis) |
-| **Parametro** | MV_CUSMED - Metodo de custeio; MV_MOTEFET - Movimentacao efetiva |
+| **Parametro** | MV_CUSMED - Metodo de custeio |
 
 ### Estoque -> Fiscal
 
@@ -873,26 +859,18 @@ Solicitacao ao Armazem (MATA105/SCP) → Aprovacao → Separacao → Movimentaca
 | Parametro | Tipo | Descricao |
 |-----------|------|-----------|
 | MV_CUSMED | N | Metodo de custeio: 1=Medio, 2=Standard, 3=Ultimo Preco, 4=FIFO/PEPS |
-| MV_QTDNEG | C | Permite saldo negativo em estoque (S/N) |
+| MV_ESTNEG | C | Permite saldo negativo em estoque (S/N) |
 | MV_RASTRO | C | Habilita rastreabilidade global por lote/sublote (S/N) |
 | MV_LOCALIZ | C | Habilita controle de enderecamento/localizacao (S/N) |
 | MV_ARQPROD | C | Utiliza SBZ (indicadores por filial) em vez da SB1 (S/N) |
 | MV_CADPROD | C | Cadastros complementares exibidos com o produto |
 | MV_TMPAD | C | Tipo de movimentacao padrao |
-| MV_TESSION | C | TM padrao para transferencia entre armazens |
-| MV_SUBTM | C | Habilita substituicao do tipo de movimentacao (S/N) |
 | MV_ULMES | D | Data do ultimo fechamento de estoque |
-| MV_DATREF | D | Data de referencia para calculo de custos |
 | MV_LOTVENC | C | Permite uso de lote vencido (S/N) |
 | MV_VLDLOTE | C | Validacao de datas de origem do lote |
 | MV_TDATALO | C | Tipo de data para checagem de lotes vencidos |
 | MV_CQ | C | Codigo do armazem de Controle de Qualidade |
-| MV_ESESSION | C | Gera solicitacao de compra ao atingir estoque minimo (S/N) |
 | MV_CMDBLQV | C | Bloqueia movimentacao de produto bloqueado (S/N) |
-| MV_PRECAUT | L | Recalculo automatico de custo |
-| MV_MOTEFET | C | Define movimentacao efetiva ou por ordem |
-| MV_PRODDUP | C | Permite codigo de produto duplicado (S/N) |
-| MV_CODBAR | C | Valida codigo de barras com digito verificador (S/N) |
-| MV_SALREQ | C | Verifica saldo disponivel ao requisitar material (S/N) |
+| MV_LOCPROC | C | Local padrao para processamento |
 | MV_WMSENPK | C | Armazenamento prioritario no picking |
 | MV_WMSPKFX | C | Endereco fixo de picking |

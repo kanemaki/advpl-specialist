@@ -318,8 +318,7 @@ Armazena os cabecalhos de faturas que agrupam titulos a pagar ou a receber para 
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_MASCNAT | Mascara do codigo da natureza financeira |
-| MV_NATEFAT | Natureza padrao para efetivacao de faturas |
+| MV_MASCNAT | Mascara do codigo da natureza do titulo financeiro |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -344,12 +343,6 @@ Armazena os cabecalhos de faturas que agrupam titulos a pagar ou a receber para 
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_1DUP | Numero inicial da primeira duplicata |
-| MV_NUMTIT | Numeracao sequencial de titulos |
-| MV_JURONE1 | Percentual de juros padrao para contas a receber |
-| MV_MULRONE1 | Percentual de multa padrao para contas a receber |
-| MV_DESCONE1 | Percentual de desconto padrao para contas a receber |
-| MV_MOEDPAD | Moeda padrao do titulo |
-| MV_DTEFAT | Data de efetivacao da fatura |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -375,15 +368,8 @@ Armazena os cabecalhos de faturas que agrupam titulos a pagar ou a receber para 
 - SA6 (leitura) - Bancos
 
 **Parametros relevantes:**
-| Parametro | Descricao |
-|-----------|-----------|
-| MV_NUMTITE2 | Numeracao sequencial de titulos a pagar |
-| MV_JURONE2 | Percentual de juros padrao para contas a pagar |
-| MV_MULRONE2 | Percentual de multa padrao para contas a pagar |
-| MV_DESCONE2 | Percentual de desconto padrao para contas a pagar |
-| MV_MOEDPAD | Moeda padrao do titulo |
-| MV_PAGANTEC | Permite pagamento antecipado (PA) |
-| MV_DESDBCP | Permite desdobramento de titulos a pagar |
+
+> Nenhum parametro MV_* confirmado no TDN para esta rotina especifica. Os parametros de impostos e retencoes sao configurados na natureza financeira (SED).
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -409,9 +395,7 @@ Armazena os cabecalhos de faturas que agrupam titulos a pagar ou a receber para 
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_NUMBOR | Numeracao sequencial do bordero |
-| MV_PORTFIN | Portador padrao financeiro |
-| MV_BORDAUT | Bordero automatico (S/N) |
+| MV_NUMBORR | Numeracao sequencial do bordero a receber |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -433,11 +417,8 @@ Armazena os cabecalhos de faturas que agrupam titulos a pagar ou a receber para 
 - FKD (escrita) - Valores Acessorios (se aplicavel)
 
 **Parametros relevantes:**
-| Parametro | Descricao |
-|-----------|-----------|
-| MV_BX070DT | Permite data de baixa anterior a data de emissao |
-| MV_IMPLBX | Implantacao da baixa (bloqueia recalculo de juros) |
-| MV_DATABX | Data padrao para baixa |
+
+> Nenhum parametro MV_* confirmado no TDN para esta rotina especifica. Os parametros de juros, multa e desconto sao configurados via MV_JURTIPO, MV_TXPER e na natureza financeira.
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -460,12 +441,8 @@ Armazena os cabecalhos de faturas que agrupam titulos a pagar ou a receber para 
 - FKD (escrita) - Valores Acessorios (se aplicavel)
 
 **Parametros relevantes:**
-| Parametro | Descricao |
-|-----------|-----------|
-| MV_BX080DT | Permite data de baixa anterior a data de emissao |
-| MV_IMPLBX | Implantacao da baixa (bloqueia recalculo de juros) |
-| MV_DATABX | Data padrao para baixa |
-| MV_MOTBXCP | Motivo de baixa padrao para contas a pagar |
+
+> Nenhum parametro MV_* confirmado no TDN para esta rotina especifica. Os parametros de juros, multa e desconto sao configurados via MV_JURTIPO, MV_TXPER e na natureza financeira.
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -487,11 +464,8 @@ Armazena os cabecalhos de faturas que agrupam titulos a pagar ou a receber para 
 - SA6 (leitura) - Bancos
 
 **Parametros relevantes:**
-| Parametro | Descricao |
-|-----------|-----------|
-| MV_BXAUTCP | Habilita baixa automatica do contas a pagar |
-| MV_MOTBXCP | Motivo de baixa padrao |
-| MV_JURONE2 | Percentual de juros padrao |
+
+> Nenhum parametro MV_* confirmado no TDN para esta rotina especifica.
 
 ---
 
@@ -505,10 +479,8 @@ Armazena os cabecalhos de faturas que agrupam titulos a pagar ou a receber para 
 - SA6 (leitura) - Bancos
 
 **Parametros relevantes:**
-| Parametro | Descricao |
-|-----------|-----------|
-| MV_NUMBCO | Numeracao sequencial de documentos bancarios |
-| MV_CTBMOVB | Contabiliza movimentos bancarios online |
+
+> Nenhum parametro MV_* confirmado no TDN para esta rotina especifica. O numero do documento bancario e armazenado no campo E1_NUMBCO/E5_NUMBCO, nao em um parametro MV_.
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -529,10 +501,8 @@ Armazena os cabecalhos de faturas que agrupam titulos a pagar ou a receber para 
 - SA6 (leitura) - Bancos
 
 **Parametros relevantes:**
-| Parametro | Descricao |
-|-----------|-----------|
-| MV_BXAUTCR | Habilita baixa automatica do contas a receber |
-| MV_MOTBXCR | Motivo de baixa padrao para contas a receber |
+
+> Nenhum parametro MV_* confirmado no TDN para esta rotina especifica.
 
 ---
 
@@ -548,10 +518,8 @@ Armazena os cabecalhos de faturas que agrupam titulos a pagar ou a receber para 
 - SA6 (leitura) - Bancos
 
 **Parametros relevantes:**
-| Parametro | Descricao |
-|-----------|-----------|
-| MV_PESSION | Pasta de arquivos CNAB de retorno |
-| MV_LAYRET | Layout de retorno CNAB padrao |
+
+> Nenhum parametro MV_* confirmado no TDN para esta rotina especifica. A configuracao de layout CNAB e feita nas tabelas EE*/SEE.
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -575,8 +543,7 @@ Armazena os cabecalhos de faturas que agrupam titulos a pagar ou a receber para 
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_NUMBOR | Numeracao sequencial do bordero |
-| MV_BORAUT | Bordero automatico a pagar |
+| MV_NUMBORP | Numeracao sequencial do bordero a pagar |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -976,7 +943,7 @@ Titulo a Receber (SE1) + Titulo a Pagar (SE2) → Compensacao entre Carteiras (F
 | **Quando** | Na inclusao de titulos (SE1/SE2), na baixa (FINA070/FINA080/FINA090/FINA110), na movimentacao bancaria (FINA100) e na compensacao |
 | **O que acontece** | Gera lancamentos contabeis na CT2 conforme Lancamento Padrao (CT5) configurado. Na inclusao: debita contas de clientes/fornecedores e credita contas de receita/despesa. Na baixa: debita/credita contas de banco e abate o titulo. |
 | **Tabelas afetadas** | CT2 (Lancamentos Contabeis) |
-| **Parametro** | MV_CTBFIN - Contabilizacao online do financeiro |
+| **Parametro** | A contabilizacao e controlada pelo Lancamento Padrao (CT5) e pela flag MV_CTBFLAG |
 | **Observacao** | A contabilizacao pode ser online (no momento da operacao) ou offline (via rotina CTBAFIN em lote) |
 
 ### Financeiro -> Fiscal (Retencoes)
@@ -986,7 +953,7 @@ Titulo a Receber (SE1) + Titulo a Pagar (SE2) → Compensacao entre Carteiras (F
 | **Quando** | Na inclusao e/ou baixa de titulos a pagar e a receber |
 | **O que acontece** | Com base na natureza financeira (SED), o sistema calcula automaticamente as retencoes tributarias: IRRF, PIS, COFINS, CSLL, ISS e INSS. Os valores sao deduzidos do titulo e podem gerar titulos de imposto separados (tipo TX). As retencoes sao consideradas nas obrigacoes acessorias (EFD-REINF, DIRF, etc.). |
 | **Tabelas afetadas** | SE2 (titulos de imposto gerados), SFT (escrituracao fiscal quando aplicavel) |
-| **Observacao** | A configuracao de retencoes e feita na natureza financeira (SED) e nos parametros MV_ALIQIRF, MV_VLMINIRF, MV_ALIQPIS, MV_ALIQCOF, MV_ALIQCSL |
+| **Observacao** | A configuracao de retencoes e feita na natureza financeira (SED) e nos parametros MV_ALIQIRF, MV_VLRETIR, MV_VRETPIS, MV_VRETCOF, MV_VRETCSL |
 
 ### Resumo das integracoes do Financeiro
 
@@ -1038,39 +1005,11 @@ Titulo a Receber (SE1) + Titulo a Pagar (SE2) → Compensacao entre Carteiras (F
 
 | Parametro | Tipo | Descricao |
 |-----------|------|-----------|
-| MV_MOEDPAD | N | Moeda padrao do sistema |
-| MV_DATABX | D | Data padrao para baixa de titulos |
-| MV_IMPLBX | L | Modo implantacao de baixa (bloqueia recalculo de juros/multa) |
-| MV_JURONE1 | N | Percentual de juros padrao para contas a receber |
-| MV_JURONE2 | N | Percentual de juros padrao para contas a pagar |
-| MV_MULRONE1 | N | Percentual de multa padrao para contas a receber |
-| MV_MULRONE2 | N | Percentual de multa padrao para contas a pagar |
-| MV_DESCONE1 | N | Percentual de desconto padrao para contas a receber |
-| MV_DESCONE2 | N | Percentual de desconto padrao para contas a pagar |
-| MV_NUMTIT | C | Numeracao sequencial de titulos a receber |
-| MV_NUMTITE2 | C | Numeracao sequencial de titulos a pagar |
-| MV_NUMBOR | C | Numeracao sequencial de borderos |
-| MV_NUMBCO | C | Numeracao sequencial de documentos bancarios |
-| MV_MASCNAT | C | Mascara do codigo de natureza financeira |
 | MV_1DUP | C | Numero inicial da primeira duplicata |
-| MV_CTBFIN | L | Contabilizacao online do financeiro |
-| MV_CTBMOVB | L | Contabiliza movimentos bancarios online |
-| MV_PORTFIN | C | Portador padrao financeiro |
-| MV_BORDAUT | L | Bordero automatico (S/N) |
-| MV_BORAUT | L | Bordero automatico a pagar |
-| MV_BX070DT | L | Permite data de baixa anterior a emissao (CR) |
-| MV_BX080DT | L | Permite data de baixa anterior a emissao (CP) |
-| MV_MOTBXCR | C | Motivo de baixa padrao para contas a receber |
-| MV_MOTBXCP | C | Motivo de baixa padrao para contas a pagar |
-| MV_BXAUTCR | L | Habilita baixa automatica do contas a receber |
-| MV_BXAUTCP | L | Habilita baixa automatica do contas a pagar |
-| MV_PAGANTEC | L | Permite pagamento antecipado |
-| MV_DESDBCP | L | Permite desdobramento de titulos a pagar |
 | MV_ALIQIRF | N | Aliquota padrao de IRRF |
-| MV_VLMINIRF | N | Valor minimo para retencao de IRRF |
-| MV_ALIQPIS | N | Aliquota padrao de PIS retido |
-| MV_ALIQCOF | N | Aliquota padrao de COFINS retida |
-| MV_ALIQCSL | N | Aliquota padrao de CSLL retida |
-| MV_LAYRET | C | Layout de retorno CNAB padrao |
-| MV_PESSION | C | Pasta de arquivos CNAB de retorno |
-| MV_NATEFAT | C | Natureza padrao para efetivacao de faturas |
+| MV_MASCNAT | C | Mascara do codigo da natureza do titulo financeiro (tipo C, padrao "19") |
+| MV_VLRETIR | N | Valor minimo para retencao de IRRF (padrao 10.00) |
+| MV_NUMBORP | C | Numeracao sequencial de borderos a pagar |
+| MV_NUMBORR | C | Numeracao sequencial de borderos a receber |
+
+> **Nota:** Esta tabela contem apenas parametros confirmados no TDN e nos fontes do Protheus. Existem centenas de outros parametros MV_* utilizados pelo modulo Financeiro (impostos, retencoes, contabilizacao, integracao, etc.) que podem ser consultados diretamente na tabela SX6 do ambiente Protheus.

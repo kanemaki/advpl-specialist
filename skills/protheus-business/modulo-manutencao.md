@@ -410,12 +410,6 @@ Registra as movimentacoes do ativo fixo: depreciacao, amortizacao, correcao mone
 - SN1 (leitura) - Ativo Imobilizado (vinculo)
 - SB1 (leitura) - Cadastro de Produtos (vinculo estoque)
 
-**Parametros relevantes:**
-| Parametro | Descricao |
-|-----------|-----------|
-| MV_MNTSEQ | Sequencial de numeracao de bens |
-| MV_MNTNOV | Novo padrao de cadastro de bens |
-
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
 |------------------|-----------|
@@ -438,11 +432,6 @@ Registra as movimentacoes do ativo fixo: depreciacao, amortizacao, correcao mone
 - SRA (leitura) - Funcionarios (para mao de obra)
 - SB1 (leitura) - Produtos (para materiais)
 
-**Parametros relevantes:**
-| Parametro | Descricao |
-|-----------|-----------|
-| MV_MNTTOL | Tolerancia para geracao de O.S. preventiva |
-
 ---
 
 ### MNTA280 - Solicitacao de Servico
@@ -455,12 +444,6 @@ Registra as movimentacoes do ativo fixo: depreciacao, amortizacao, correcao mone
 - TQB (escrita) - Solicitacoes de Servico
 - ST9 (leitura) - Bens/Ativos
 - STJ (escrita) - Ordens de Servico (quando gera O.S. a partir da S.S.)
-
-**Parametros relevantes:**
-| Parametro | Descricao |
-|-----------|-----------|
-| MV_MNTSS | Sequencial de numeracao de S.S. |
-| MV_MNTWKF | Habilita workflow para solicitacao de servico |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -483,12 +466,6 @@ Registra as movimentacoes do ativo fixo: depreciacao, amortizacao, correcao mone
 - STJ (escrita) - Ordens de Servico (geradas)
 - STL (escrita) - Detalhes da O.S. (insumos copiados de STG)
 - ST9 (leitura) - Bens/Ativos (contador, datas)
-
-**Parametros relevantes:**
-| Parametro | Descricao |
-|-----------|-----------|
-| MV_MNTPLN | Sequencial de numeracao de planos |
-| MV_MNTTOL | Tolerancia para calculo da data prevista |
 
 ---
 
@@ -869,9 +846,3 @@ O operador pode abrir diretamente uma O.S. Corretiva sem necessidade de Solicita
 | MV_MNTDEV | C | Tipo de movimento (SF5) para devolucoes de estoque do SIGAMNT |
 | MV_PRODMNT | C | Codigo do produto para gerar Ordem de Producao (SC2) a partir da O.S. |
 | MV_PRODTER | C | Codigo do produto para gerar Solicitacao de Armazem para terceiros |
-| MV_MNTSEQ | C | Sequencial de numeracao de bens |
-| MV_MNTSS | C | Sequencial de numeracao de solicitacoes de servico |
-| MV_MNTPLN | C | Sequencial de numeracao de planos de manutencao |
-| MV_MNTTOL | N | Tolerancia (em dias) para geracao de O.S. preventiva |
-| MV_MNTWKF | L | Habilita workflow para solicitacao de servico |
-| MV_MNTNOV | L | Habilita novo padrao de cadastro de bens |

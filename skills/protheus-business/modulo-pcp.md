@@ -71,8 +71,6 @@ Armazena as ordens de producao (OPs). Cada registro representa uma OP para fabri
 | C2_LOCAL | C | 2 | Armazem destino do produto acabado |
 | C2_LOCALI | C | 2 | Armazem de requisicao dos componentes |
 | C2_CC | C | 9 | Centro de custo |
-| C2_TESSION | C | 3 | TES de entrada (producao) |
-| C2_TESSION2 | C | 3 | TES de saida (requisicao) |
 | C2_DATRF | D | 8 | Data real de finalizacao |
 | C2_STATUS | C | 1 | Status: P=Prevista, N=Normal, I=Iniciada, E=Encerrada |
 | C2_TPOP | C | 2 | Tipo de OP |
@@ -234,10 +232,8 @@ Armazena o cadastro de operacoes padrao utilizadas nos roteiros de producao, con
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_ESTRUT | Controle de revisao de estrutura |
-| MV_ESTREV | Habilita revisao de estrutura por filial |
-| MV_NIVSTRU | Numero maximo de niveis da estrutura |
-| MV_NIVFANT | Tratamento de componentes fantasma na explosao |
+| MV_REVAUT | Revisao automatica da estrutura (.T.=automatico, .F.=manual) |
+| MV_REVFIL | Controle de revisao de estrutura por filial via tabela SBZ (usado com MV_ARQPROD=SBZ) |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -265,14 +261,8 @@ Armazena o cadastro de operacoes padrao utilizadas nos roteiros de producao, con
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_TESSION | TES padrao de entrada para producao |
-| MV_TESSION2 | TES padrao de saida para requisicao |
-| MV_EMESSION | Tipo de emissao da OP (Manual/Automatica) |
 | MV_PRECISA | Precisao de calculo para planejamento (impacta processamento) |
-| MV_CUSTOP | Controle de custeio na OP |
-| MV_OPCOMP | Complementa OP quando quantidade produzida excede planejada |
-| MV_ESTNEGA | Permite estoque negativo |
-| MV_QTDMINI | Quantidade minima por OP |
+| MV_ESTNEG | Permite estoque negativo (S=Permite, N=Nao permite) |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -300,13 +290,11 @@ Armazena o cadastro de operacoes padrao utilizadas nos roteiros de producao, con
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_REQAUT | Requisicao automatica: S=Automatica na producao, N=Manual via MATA241 |
-| MV_PRODAUT | Producao automatica de OPs intermediarias (S/N) |
+| MV_REQAUT | Requisicao automatica: S=Automatica na producao, N=Manual via MATA241, A=Todos, D=Diretos manual/Indiretos automatico |
+| MV_PRODAUT | Producao automatica de OPs intermediarias (.T./.F.) |
 | MV_PERCPRM | Proporcionaliza consumo de componentes quando quantidade excede planejada |
-| MV_PRODPR0 | Custeio da producao: 1=Custo medio, 2=Custo padrao |
-| MV_PERDINF | Conceito de perda no apontamento (Sobre quantidade total ou individual) |
-| MV_TESSION | TES de entrada para producao |
-| MV_TESSION2 | TES de saida para requisicao |
+| MV_PRODPR0 | Proporcionalizacao do custeio de producao: 1=Qtd apontada, 2=D3_RATEIO, 3=Qtd original da OP |
+| MV_PERDINF | Conceito de perda no apontamento (.T.=Perda informativa/custo proporcional, .F.=Perda no saldo da OP) |
 | MV_APTEMP | Valida empenhos temporarios no apontamento |
 
 **Pontos de entrada:**
@@ -336,12 +324,9 @@ Armazena o cadastro de operacoes padrao utilizadas nos roteiros de producao, con
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_REQAUT | Requisicao automatica de materiais (S/N) |
-| MV_PRODAUT | Producao automatica de OPs intermediarias (S/N) |
-| MV_APTS681 | Habilita apontamento simultaneo de operacoes |
+| MV_REQAUT | Requisicao automatica de materiais (S/N/A/D) |
+| MV_PRODAUT | Producao automatica de OPs intermediarias (.T./.F.) |
 | MV_PRECISA | Precisao de calculo para planejamento |
-| MV_TESSION | TES de entrada para producao |
-| MV_TESSION2 | TES de saida para requisicao |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -378,12 +363,7 @@ Armazena o cadastro de operacoes padrao utilizadas nos roteiros de producao, con
 |-----------|-----------|
 | MV_QUEBROP | Quebra OPs por lote economico (S=Sim, N=Nao - gera uma unica OP) |
 | MV_QUEBRSC | Quebra SCs por lote economico (S=Sim, N=Nao - gera uma unica SC) |
-| MV_LEADTIME | Considera lead time no calculo de datas |
-| MV_ESTSEG | Considera estoque de seguranca |
-| MV_LOTECPV | Lote economico de compra |
-| MV_LOTECPD | Lote economico de producao |
 | MV_PRECISA | Precisao de calculo (impacta performance) |
-| MV_EMESSION | Tipo de emissao da OP gerada pelo MRP |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -418,9 +398,6 @@ Armazena o cadastro de operacoes padrao utilizadas nos roteiros de producao, con
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_PRECISA | Precisao do calculo (quanto maior, maior o tempo de processamento) |
-| MV_CRGFERR | Considera ferramentas na alocacao (S/N) |
-| MV_CRGSOBRE | Considera sobreposicao de operacoes (S/N) |
-| MV_CRGALT | Utiliza recurso alternativo quando recurso principal indisponivel |
 
 ---
 
@@ -431,12 +408,6 @@ Armazena o cadastro de operacoes padrao utilizadas nos roteiros de producao, con
 **Tabelas envolvidas:**
 - SC4 (escrita) - Previsao de Vendas
 - SB1 (leitura) - Cadastro de Produtos
-
-**Parametros relevantes:**
-| Parametro | Descricao |
-|-----------|-----------|
-| MV_PREVIS | Tipo de previsao (por produto, por grupo, etc.) |
-| MV_TPHRPVD | Tipo de horizonte para previsao de vendas |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -625,8 +596,8 @@ No fluxo simplificado, o planejador cria a OP diretamente via MATA650 sem passar
 | Estrutura circular | O sistema impede que um produto seja componente de si mesmo (direta ou indiretamente) |
 | Validade da estrutura | Componentes com data de validade (G1_INI/G1_FIM) sao considerados apenas no periodo vigente |
 | Saldo de empenho | Na requisicao, a quantidade nao pode ultrapassar o saldo empenhado para a OP (D4_QUANT) |
-| Saldo de OP | No apontamento, a quantidade produzida somada a ja reportada nao pode ultrapassar a quantidade da OP, salvo parametrizacao contraria (MV_OPCOMP) |
-| Estoque disponivel | Requisicoes verificam saldo em estoque (SB2). Se MV_ESTNEGA nao permitir, bloqueia requisicao sem saldo |
+| Saldo de OP | No apontamento, a quantidade produzida somada a ja reportada nao pode ultrapassar a quantidade da OP, salvo parametrizacao contraria (MV_LIBACIM/MV_GANHOPR) |
+| Estoque disponivel | Requisicoes verificam saldo em estoque (SB2). Se MV_ESTNEG nao permitir, bloqueia requisicao sem saldo |
 | OP encerrada | Nao permite apontamento ou requisicao em OP com status Encerrada (C2_STATUS = "E") |
 | Revisao de estrutura | Se controle de revisao ativo, apenas a revisao vigente da estrutura e considerada na explosao |
 | Produto fantasma | Componentes marcados como fantasma (G1_FANTASM = "S") sao explodidos automaticamente ate o nivel real |
@@ -638,7 +609,6 @@ No fluxo simplificado, o planejador cria a OP diretamente via MATA650 sem passar
 | C2_PRODUTO | C2_DESCRI | SB1->B1_DESC | SB1 |
 | C2_PRODUTO | C2_UM | SB1->B1_UM | SB1 |
 | C2_PRODUTO | C2_LOCAL | SB1->B1_LOCPAD | SB1 |
-| C2_PRODUTO | C2_TESSION | MV_TESSION (parametro) | - |
 | D3_COD | D3_UM | SB1->B1_UM | SB1 |
 | D3_COD | D3_CONTA | SB1->B1_CONTA | SB1 |
 | D3_COD | D3_CC | SB1->B1_CC | SB1 |
@@ -695,7 +665,7 @@ No fluxo simplificado, o planejador cria a OP diretamente via MATA650 sem passar
 | **Quando** | No apontamento de producao e na requisicao de materiais, quando contabilizacao online estiver habilitada |
 | **O que acontece** | Gera lancamentos contabeis na CT2 para: (a) entrada de produto acabado debitando estoque de PA e creditando producao em processo; (b) saida de materiais debitando producao em processo e creditando estoque de MP. Os lancamentos seguem o Lancamento Padrao (CT5) configurado na TES |
 | **Tabelas afetadas** | CT2 (Lancamentos Contabeis) |
-| **Parametro** | MV_PRODPR0 - Define modelo de custeio: 1=Custo medio, 2=Custo padrao |
+| **Parametro** | MV_PRODPR0 - Proporcionalizacao do custeio de producao: 1=Qtd apontada, 2=D3_RATEIO, 3=Qtd original da OP |
 
 ### PCP → Qualidade
 
@@ -760,30 +730,14 @@ No fluxo simplificado, o planejador cria a OP diretamente via MATA650 sem passar
 
 | Parametro | Tipo | Descricao |
 |-----------|------|-----------|
-| MV_TESSION | C | TES padrao de entrada para producao |
-| MV_TESSION2 | C | TES padrao de saida para requisicao de materiais |
-| MV_REQAUT | C | Requisicao automatica de materiais no apontamento (S/N) |
-| MV_PRODAUT | L | Producao automatica de OPs intermediarias (S/N) |
-| MV_PRODPR0 | N | Custeio da producao: 1=Custo medio, 2=Custo padrao |
+| MV_REQAUT | C | Requisicao automatica de materiais no apontamento (S=Automatica, N=Manual/MATA241, A=Todos, D=Diretos manual/Indiretos automatico) |
+| MV_PRODAUT | L | Gera lancamentos automaticos de producao das OPs vinculadas a OP pai (.T./.F.) |
+| MV_PRODPR0 | N | Proporcionalizacao do custeio de producao no recalculo de custo medio: 1=Qtd apontada, 2=D3_RATEIO, 3=Qtd original da OP |
 | MV_PERCPRM | L | Proporcionaliza consumo de componentes em producao excedente |
-| MV_PERDINF | C | Conceito de perda no apontamento de producao |
+| MV_PERDINF | L | Conceito de perda no apontamento (.T.=Perda informativa/custo proporcional a producao, .F.=Perda considerada no saldo da OP) |
+| MV_PRECISA | N | Fracao de uma hora e nivel de precisao para calendario. Padrao=4 (15 min). Quanto maior, maior o tempo de processamento |
+| MV_QUEBROP | C | Habilita lote economico para ordens de producao no MRP (S/N) |
+| MV_QUEBRSC | C | Habilita lote economico para solicitacoes de compra no MRP (S/N) |
 | MV_APTEMP | L | Valida empenhos temporarios no apontamento |
-| MV_ESTNEGA | L | Permite estoque negativo (S/N) |
-| MV_OPCOMP | L | Complementa OP quando producao excede planejado |
-| MV_PRECISA | N | Precisao de calculo para planejamento (impacta performance) |
-| MV_EMESSION | C | Tipo de emissao da OP (Manual/Automatica) |
-| MV_CUSTOP | C | Controle de custeio na OP |
-| MV_ESTRUT | C | Controle de revisao de estrutura |
-| MV_ESTREV | L | Habilita revisao de estrutura por filial |
-| MV_NIVSTRU | N | Numero maximo de niveis da estrutura |
-| MV_NIVFANT | C | Tratamento de componentes fantasma na explosao |
-| MV_QUEBROP | C | Quebra OPs por lote economico no MRP (S/N) |
-| MV_QUEBRSC | C | Quebra SCs por lote economico no MRP (S/N) |
-| MV_LEADTIME | L | Considera lead time no calculo de datas do MRP |
-| MV_ESTSEG | L | Considera estoque de seguranca no MRP |
-| MV_LOTECPD | N | Lote economico de producao |
-| MV_CRGFERR | L | Considera ferramentas na carga maquina (S/N) |
-| MV_CRGSOBRE | L | Considera sobreposicao de operacoes na carga maquina |
-| MV_CRGALT | L | Utiliza recurso alternativo na carga maquina |
-| MV_APTS681 | L | Habilita apontamento simultaneo de operacoes no modelo 2 |
-| MV_QTDMINI | N | Quantidade minima por OP |
+| MV_ESTNEG | C | Permite estoque negativo (S=Permite, N=Nao permite) |
+| MV_REVFIL | L | Controle de revisao de estrutura por filial via tabela SBZ (usado com MV_ARQPROD=SBZ) |

@@ -313,7 +313,6 @@ Titulos financeiros gerados automaticamente ao classificar o documento de entrad
 | MV_SEQESP | Habilita sequencia especifica para numeracao de SC |
 | MV_RESTSOL | Restringe solicitantes de produtos |
 | MV_RESTCOM | Restringe acesso as solicitacoes por comprador |
-| MV_CODCOMP | Inicializador padrao do codigo do comprador (C1_CODCOMP) |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -339,8 +338,6 @@ Titulos financeiros gerados automaticamente ao classificar o documento de entrad
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_ENVCOT | Envia e-mail de cotacao automaticamente ao fornecedor |
-| MV_COTQTD | Quantidade minima de fornecedores por cotacao |
-| MV_NUMCOT | Numero sequencial de cotacoes |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -361,13 +358,6 @@ Titulos financeiros gerados automaticamente ao classificar o documento de entrad
 - SA2 (leitura) - Cadastro de Fornecedores
 - SC1 (leitura) - Solicitacoes de Compra
 - SC7 (escrita) - Pedido de Compra (quando gera pedido a partir da analise)
-
-**Parametros relevantes:**
-| Parametro | Descricao |
-|-----------|-----------|
-| MV_DIACOT | Numero de dias para validade da cotacao |
-| MV_VLCOT | Validacao da cotacao |
-| MV_CODFOOT | Configura como classificacao da melhor cotacao |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -403,15 +393,9 @@ O pedido pode ser gerado:
 | MV_RESTPED | Restringe manutencao do pedido de compra |
 | MV_RESTNFE | Restringe recebimento de pedido bloqueado |
 | MV_ARRPEDC | Arredondamento do valor total do Pedido de Compra |
-| MV_PROJEC | Habilita rateio de Contas Contabeis nos itens do Pedido |
-| MV_RATEUP | Permite a duplicidade de linhas de rateio no centro de custo |
-| MV_ALTPRC | Controla alteracao do preco quando pedido ja foi parcialmente atendido |
-| MV_RESTSC | Restricao de acesso as SCs por grupo de compras |
-| MV_COTCPC | Controle de Alcadas para Pedido de Compras |
+| MV_ALTPRCC | Controla alteracao do preco na classificacao de NF/pre-nota |
 | MV_PCNFE | Obrigatoriedade de informar numero do PC na pre-nota |
-| MV_COTXPC | Configuracao da contabilizacao on-line no Pedido de Compra |
-| MV_ALTRIC | Permite alteracao de pedido ja parcialmente atendido com .T. (Sim/Verdadeiro) |
-| MV_CNDDPCL | Configuracao da centralizadora de compras |
+| MV_ALTPEDC | Controla se usuario pode modificar pedidos de compra ja atendidos |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -453,7 +437,6 @@ Documentos sujeitos a aprovacao:
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_APESSION | Habilita alcada para aprovacao |
 | MV_ALTPDOC | Determina quais documentos sao validos para o grupo de aprovacao |
 | MV_APRIPPC | Aprovacao automatica via parametro |
 
@@ -481,7 +464,6 @@ A pre-nota **nao gera** lancamentos fiscais, contabeis ou financeiros e **nao at
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_PCNFE | Obrigatoriedade de vincular pedido de compra a pre-nota |
-| MV_DTNFE | Permite data da nota anterior ao pedido |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -515,9 +497,8 @@ Quando o produto possui controle de qualidade e a qualificacao do fornecedor no 
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_TESPCNF | TES padrao para classificacao de pre-nota |
+| MV_TESPCNF | TES que nao necessita de PC amarrado |
 | MV_CQ | Armazem de controle de qualidade |
-| MV_DOCCLI | Permite duplicidade de numero de NF por fornecedor |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -567,7 +548,7 @@ Essas informacoes sao utilizadas na geracao automatica de cotacoes (MATA131) e n
 |---------|---------|
 | **Rotina** | MATA110 |
 | **Tabelas** | SC1 (escrita), SB1 (leitura) |
-| **O que acontece** | Usuario formaliza necessidade de compra informando produto, quantidade, data de necessidade, centro de custo, armazem destino e observacoes. Se alcadas estiverem habilitadas (`MV_APESSION`), a SC fica bloqueada (C1_APESSION = "B") aguardando liberacao. |
+| **O que acontece** | Usuario formaliza necessidade de compra informando produto, quantidade, data de necessidade, centro de custo, armazem destino e observacoes. Se alcadas estiverem habilitadas (via cadastro de Grupos de Aprovacao - MATA114), a SC fica bloqueada (C1_APESSION = "B") aguardando liberacao. |
 | **Resultado** | Registro na SC1 com status pendente ou liberado |
 
 #### Passo 2: Geracao de Cotacao (MATA131)
@@ -661,7 +642,7 @@ Quando `MV_RESTINC` estiver desabilitado, o pedido pode ser criado diretamente s
 | Aprovacao/Alcada | Se controle de alcada estiver ativo, documentos bloqueados nao podem seguir no fluxo ate liberacao pelo aprovador |
 | Amarracao Produto x Fornecedor | Se `MV_RESTINC` exigir, o fornecedor deve estar vinculado ao produto no SA5 |
 | Fornecedor bloqueado | Nao permite gerar pedido para fornecedor com A2_MSBLQL = "1" |
-| Duplicidade de NF | Verifica duplicidade de numero de NF por fornecedor (parametro `MV_DOCCLI`) |
+| Duplicidade de NF | Verifica duplicidade de numero de NF por fornecedor (validacao nativa do sistema) |
 | Residuo | Itens marcados como residuo (C7_RESIDUO = "S" ou C1_APESSION = "R") nao participam de novos pedidos/cotacoes |
 
 ### Gatilhos SX7 relevantes
@@ -734,7 +715,7 @@ Quando `MV_RESTINC` estiver desabilitado, o pedido pode ser criado diretamente s
 | **Quando** | Na classificacao do Documento de Entrada (MATA103), se contabilizacao online estiver habilitada |
 | **O que acontece** | Gera lancamentos contabeis na CT2, debitando as contas de estoque/despesa e creditando as contas de fornecedores/impostos, conforme Lancamento Padrao (CT5) configurado na TES |
 | **Tabelas afetadas** | CT2 (Lancamentos Contabeis) |
-| **Parametro** | MV_COTXPC - Configuracao da contabilizacao on-line |
+| **Parametro** | Contabilizacao on-line controlada pela configuracao da TES e Lancamento Padrao (CT5) |
 
 ### Compras → Qualidade (CQ)
 
@@ -786,22 +767,14 @@ Quando `MV_RESTINC` estiver desabilitado, o pedido pode ser criado diretamente s
 | MV_RESTNFE | C | Restringe recebimento de PC bloqueado (S/N) |
 | MV_RESTSOL | C | Restringe solicitantes de produtos (S/N) |
 | MV_RESTCOM | C | Restringe acesso as SCs por comprador (S/N) |
-| MV_RESTSC | C | Restricao de acesso as SCs por grupo de compras (S/N) |
-| MV_APESSION | C | Habilita controle de alcada/aprovacao (S/N) |
 | MV_ENVCOT | C | Envia e-mail de cotacao ao fornecedor (S/N) |
-| MV_COTQTD | N | Quantidade minima de fornecedores por cotacao |
 | MV_PCNFE | C | Obrigatoriedade de PC na pre-nota (S/N) |
-| MV_ARRPEDC | C | Arredondamento do valor total do PC |
-| MV_ALTPRC | L | Permite alterar preco de PC parcialmente atendido |
-| MV_ALTRIC | L | Permite alterar PC parcialmente atendido |
+| MV_ARRPEDC | C | Arredondamento do valor total do PC (ROUND/NOROUND) |
+| MV_ALTPRCC | C | Controla alteracao do preco na classificacao de NF/pre-nota |
+| MV_ALTPEDC | C | Controla se usuario pode modificar pedidos de compra ja atendidos |
 | MV_CQ | C | Codigo do armazem de controle de qualidade |
-| MV_TESPCNF | C | TES padrao para classificacao de pre-nota |
-| MV_DOCCLI | L | Permite duplicidade de NF por fornecedor |
-| MV_PROJEC | L | Habilita rateio de contas contabeis no PC |
-| MV_NUMCOT | C | Sequencial de numeracao de cotacoes |
-| MV_DIACOT | N | Dias de validade da cotacao |
+| MV_TESPCNF | C | TES que nao necessita de PC amarrado |
 | MV_SCLCNI | L | Controle de numeracao sequencial da SC por filial |
-| MV_CODCOMP | C | Inicializador padrao do codigo do comprador |
-| MV_COTXPC | C | Contabilizacao on-line do PC |
-| MV_CNDDPCL | C | Centralizadora de compras |
-| MV_CODFOOT | C | Classificacao da melhor cotacao |
+| MV_SEQESP | L | Sequencia especifica para numeracao de SC |
+| MV_APRIPPC | C | Aprovacao automatica via parametro |
+| MV_ALTPDOC | L | Determina quais documentos sao validos para o grupo de aprovacao |

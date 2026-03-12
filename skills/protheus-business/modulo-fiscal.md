@@ -299,9 +299,7 @@ Controla as retencoes de impostos federais e municipais (IRRF, PIS, COFINS, CSLL
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_TESINT | Habilita TES Inteligente (selecao automatica da TES) |
 | MV_CREDICM | Abatimento do valor de ICMS no custo |
-| MV_CREDIPI | Abatimento do valor de IPI no custo |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -349,7 +347,6 @@ MaFisEnd()              // Finaliza e grava nos livros
 | MV_ESTADO | UF da empresa (usado para determinar operacao interna/interestadual) |
 | MV_ESTICM | Aliquotas de ICMS por UF (formato: UF+Aliq, ex: SP18MG18RJ20) |
 | MV_BASDUPL | Base dupla para calculo de DIFAL |
-| MV_ALIQINT | Aliquota interna do ICMS |
 | MV_ICMPAD | Aliquota padrao de ICMS |
 
 ---
@@ -370,8 +367,6 @@ MaFisEnd()              // Finaliza e grava nos livros
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_ESTADO | UF da empresa |
-| MV_ICMSRET | Habilita apuracao de ICMS-ST |
-| MV_DIFICM | Calcula diferencial de aliquota de ICMS |
 | MV_SUBTRIB | Habilita sub-tributacao de ICMS |
 
 **Pontos de entrada:**
@@ -395,7 +390,6 @@ MaFisEnd()              // Finaliza e grava nos livros
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_PERIPI | Periodicidade da apuracao de IPI (M=Mensal, D=Decendial, Q=Quinzenal) |
 
 ---
 
@@ -420,9 +414,6 @@ MaFisEnd()              // Finaliza e grava nos livros
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_RGMCOF | Regime de apuracao: C=Cumulativo, N=Nao-cumulativo, M=Misto |
-| MV_DIFCRD1 | Controle de diferimento de PIS/COFINS |
-| MV_COFSPED | Gera arquivo EFD Contribuicoes |
 
 ---
 
@@ -459,10 +450,7 @@ MaFisEnd()              // Finaliza e grava nos livros
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_SPESSION | Habilita geracao do SPED Fiscal |
-| MV_SPDLYT | Versao do leiaute SPED Fiscal |
-| MV_SPDFIS | Caminho do arquivo de saida |
-| MV_PERFIL | Perfil de apresentacao: A, B ou C |
+| MV_USASPED | Habilita geracao do SPED Fiscal |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -597,8 +585,6 @@ MaFisEnd()              // Finaliza e grava nos livros
 
 **SPED Fiscal (SPDFIS):**
 - Periodo de apuracao
-- Perfil de apresentacao (MV_PERFIL)
-- Leiaute do SPED (MV_SPDLYT)
 - Apuracao de ICMS e IPI previamente processada
 
 ### Regras de configuracao da TES
@@ -613,7 +599,7 @@ MaFisEnd()              // Finaliza e grava nos livros
 | Estoque | F4_ESTOQUE = "S" gera movimentacao no estoque (SD3/SB2); "N" nao movimenta |
 | Financeiro | F4_DUPLIC = "S" gera titulo financeiro (SE1/SE2); "N" nao gera |
 | Agrega Valor | F4_AGREG = "S" faz o item compor o total da NF; "N" nao agrega (ex: bonificacao) |
-| TES Inteligente | Com MV_TESINT ativo, o sistema seleciona automaticamente a TES com base na operacao, produto e participante |
+| TES Inteligente | A TES Inteligente permite selecao automatica da TES com base na operacao, produto e participante. Funciona via cadastro na tabela FM (rotina MATA089) |
 
 ### Validacoes principais
 
@@ -756,19 +742,8 @@ MaFisEnd()              // Finaliza e grava nos livros
 | MV_ESTADO | C | UF da empresa (2 caracteres) |
 | MV_ESTICM | C | Aliquotas de ICMS por UF (formato: UF+Aliq) |
 | MV_ICMPAD | N | Aliquota padrao de ICMS |
-| MV_ALIQINT | N | Aliquota interna de ICMS |
 | MV_BASDUPL | L | Base dupla para calculo de DIFAL |
-| MV_DIFICM | L | Calcula diferencial de aliquota de ICMS |
-| MV_ICMSRET | L | Habilita apuracao de ICMS-ST |
 | MV_SUBTRIB | L | Habilita sub-tributacao de ICMS |
-| MV_PERIPI | C | Periodicidade da apuracao de IPI (M/D/Q) |
-| MV_RGMCOF | C | Regime PIS/COFINS: C=Cumulativo, N=Nao-cumulativo, M=Misto |
-| MV_DIFCRD1 | C | Controle de diferimento PIS/COFINS |
-| MV_COFSPED | L | Gera arquivo EFD Contribuicoes |
-| MV_TESINT | L | Habilita TES Inteligente |
 | MV_CREDICM | L | Abatimento do ICMS no custo |
-| MV_CREDIPI | L | Abatimento do IPI no custo |
-| MV_SPESSION | L | Habilita geracao SPED Fiscal |
-| MV_SPDLYT | C | Versao do leiaute SPED Fiscal |
-| MV_SPDFIS | C | Caminho do arquivo SPED Fiscal |
-| MV_PERFIL | C | Perfil de apresentacao do SPED (A/B/C) |
+| MV_USASPED | L | Habilita geracao SPED Fiscal |
+| MV_EASY | L | Habilita uso do EIC (Easy Import Control) |

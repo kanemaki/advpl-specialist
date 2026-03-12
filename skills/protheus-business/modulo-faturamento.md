@@ -14,7 +14,7 @@ O modulo de Faturamento (SIGAFAT) do TOTVS Protheus gerencia todo o ciclo de ven
 Orcamento → Pedido de Venda → Liberacao (Credito + Estoque) → Documento de Saida (NF) → Transmissao NF-e → Titulo a Receber
 ```
 
-O modulo permite tanto o fluxo completo (com orcamento e analise de credito/estoque) quanto o fluxo simplificado (pedido direto com faturamento), controlado pelos parametros `MV_BLOQUEI` e `MV_VENDSEP`.
+O modulo permite tanto o fluxo completo (com orcamento e analise de credito/estoque) quanto o fluxo simplificado (pedido direto com faturamento), controlado pelo parametro `MV_BLOQUEI`.
 
 ---
 
@@ -320,8 +320,6 @@ Titulos financeiros gerados automaticamente ao faturar o pedido de venda, repres
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_MVCSA1 | Habilita novo cadastro de clientes em MVC (CRMA980) |
-| MV_CLIEDUP | Permite duplicidade de CNPJ no cadastro de clientes |
-| MV_LIMCRED | Define se limite de credito e por cliente ou por grupo |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -345,7 +343,6 @@ Titulos financeiros gerados automaticamente ao faturar o pedido de venda, repres
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_LJRETVL | Define criterio de preco quando ha mais de uma tabela ativa (1=menor, 2=maior) |
-| MV_TABPVEN | Busca preco na tabela de preco do pedido de venda |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -374,14 +371,7 @@ O codigo-fonte do MATA410 foi modularizado em processos incrementais, sendo o MA
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_BLOQUEI | Submete pedido a analise de credito na liberacao (.T./.F.) |
-| MV_VENDSEP | Controla se venda e separada do faturamento |
-| MV_NUMPED | Sequencial de numeracao de pedidos de venda |
-| MV_FORCLI | Exige cadastro de cliente para emissao do pedido |
-| MV_DESCMAX | Desconto maximo permitido no pedido |
-| MV_COMESSION | Calcula comissao no pedido de venda |
-| MV_TESSION | TES padrao para operacoes de saida |
 | MV_PZRESER | Prazo de validade da reserva de estoque (em dias) |
-| MV_TABPVEN | Busca preco na tabela de preco vinculada ao pedido |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -420,10 +410,10 @@ Se existem 100 unidades em estoque e o usuario libera 180, sao gerados 2 registr
 |-----------|-----------|
 | MV_BLOQUEI | Habilita analise de credito na liberacao (.T. submete todos os pedidos) |
 | MV_GRVBLQ2 | Gera bloqueio de estoque se nao houver saldo disponivel |
-| MV_LIBNODP | Define se avalia credito para pedidos que nao geram duplicata |
-| MV_GERABLQ | Gera bloqueio automaticamente quando nao ha estoque |
-| MV_CREDCLI | Controle de credito por filial ou por cliente global |
-| MV_RESEST | Controle de reserva de estoque para pedidos sem credito aprovado |
+| MV_LIBNODP | Define se avalia credito para pedidos que nao geram duplicata (conforme TES). "S" avalia credito mesmo sem geracao de duplicata |
+| MV_GERABLQ | Controla avaliacao de saldo por enderecos/lotes na liberacao. "S"=avalia saldos por endereco e bloqueia se insuficiente. Funciona em conjunto com MV_GRVBLQ2 |
+| MV_CREDCLI | Define controle de credito por loja (L) ou por cliente (C) |
+| MV_RESEST | Reserva estoque para pedidos sem credito aprovado. Quando ativo, gera reserva na SC0 mesmo com credito bloqueado |
 | MV_MCUSTO | Define o custo a ser considerado na liberacao |
 
 **Pontos de entrada:**
@@ -452,7 +442,7 @@ Possui dois modos:
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_BLOQUEI | Habilita controle de credito |
-| MV_CREDCLI | Define controle de credito por filial ou global |
+| MV_CREDCLI | Define controle de credito por loja (L) ou por cliente (C) |
 
 ---
 
@@ -506,12 +496,8 @@ A rotina MATA460A e a versao mais recente, com interface modernizada.
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_NUMNOTF | Sequencial de numeracao de NF de saida |
-| MV_ESPESSION | Define a serie/especie da NF de saida |
-| MV_VENDSEP | Controla se venda e separada do faturamento |
-| MV_AESSION | Aglutina pedidos na geracao da NF |
-| MV_DCSSPD | Controla desconto na geracao de NF |
-| MV_FATTRAV | Parametro de travamento no faturamento |
+| MV_DCSSPD | Define quais tipos de series de Documentos de Saida sao gerados no bloco F100 do SPED PIS/COFINS |
+| MV_FATTRAV | Parametro de travamento/lock no faturamento. Controla bloqueio de tabelas durante gravacao de pedidos e geracao de NF |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -628,7 +614,7 @@ Integra com o TSS (TOTVS Service SOA) para comunicacao com os web services da SE
 Pedido de Venda (SC5/SC6) → Documento de Saida (SF2/SD2) → Transmissao NF-e → Titulo a Receber (SE1)
 ```
 
-Quando `MV_BLOQUEI` estiver desabilitado (.F.) e `MV_VENDSEP` nao separar venda de faturamento, o pedido pode ser faturado diretamente sem etapa intermediaria de liberacao.
+Quando `MV_BLOQUEI` estiver desabilitado (.F.), o pedido pode ser faturado diretamente sem etapa intermediaria de liberacao.
 
 ---
 
@@ -662,12 +648,12 @@ Quando `MV_BLOQUEI` estiver desabilitado (.F.) e `MV_VENDSEP` nao separar venda 
 | Credito do cliente | Se `MV_BLOQUEI` = .T., o pedido e submetido a analise de credito. Compara valor do pedido + titulos em aberto com limite de credito (A1_LC). Se exceder ou limite vencido, bloqueia |
 | Estoque disponivel | Se `MV_GRVBLQ2` = .T., verifica saldo em estoque (SB2). Se insuficiente, gera bloqueio de estoque na SC9 |
 | Cliente bloqueado | Nao permite gerar pedido para cliente com A1_MSBLQL = "1" |
-| Desconto maximo | Valida se o desconto informado nao excede o maximo permitido (MV_DESCMAX ou DA1_DESMAX na tabela de precos) |
+| Desconto maximo | Valida se o desconto informado nao excede o maximo permitido (DA1_DESMAX na tabela de precos) |
 | Saldo do pedido | Ao gerar NF, a quantidade nao pode ultrapassar o saldo do pedido (C6_QTDVEN - C6_QTDENT) |
 | Reserva vencida | Reservas que excedem MV_PZRESER dias e nao estao vinculadas a pedidos sao depuradas automaticamente |
 | Pedido liberado | Somente pedidos com registros na SC9 sem bloqueios de credito e estoque podem ser faturados |
 | Residuo | Itens marcados como residuo (C6_BLQ = "R") nao participam do faturamento |
-| Duplicidade de NF | Verifica numeracao sequencial da NF (MV_NUMNOTF) para evitar duplicidade |
+| Duplicidade de NF | Verifica numeracao sequencial da NF para evitar duplicidade |
 
 ### Gatilhos SX7 relevantes
 
@@ -799,28 +785,16 @@ Quando `MV_BLOQUEI` estiver desabilitado (.F.) e `MV_VENDSEP` nao separar venda 
 
 | Parametro | Tipo | Descricao |
 |-----------|------|-----------|
-| MV_BLOQUEI | L | Habilita analise de credito na liberacao de pedidos |
-| MV_VENDSEP | C | Controla se venda e separada do faturamento (venda e nota sao etapas distintas) |
-| MV_NUMPED | C | Sequencial de numeracao de pedidos de venda |
-| MV_NUMNOTF | C | Sequencial de numeracao de NF de saida |
-| MV_ESPESSION | C | Serie/especie padrao da NF de saida |
-| MV_FORCLI | L | Exige cadastro de cliente para emissao de pedido |
-| MV_DESCMAX | N | Desconto maximo permitido no pedido |
-| MV_COMESSION | L | Calcula comissao no pedido de venda |
-| MV_TESSION | C | TES padrao para operacoes de saida |
-| MV_TABPVEN | L | Busca preco na tabela de preco do pedido de venda |
-| MV_PZRESER | N | Prazo de validade da reserva de estoque (dias) |
-| MV_GRVBLQ2 | L | Gera bloqueio quando nao ha saldo de estoque |
-| MV_LIBNODP | L | Avalia credito para pedidos que nao geram duplicata |
-| MV_GERABLQ | L | Gera bloqueio automaticamente na ausencia de estoque |
-| MV_CREDCLI | N | Controle de credito: 1=por filial, 2=por cliente global |
-| MV_RESEST | L | Reserva estoque para pedidos sem credito aprovado |
-| MV_MCUSTO | N | Define custo a considerar na liberacao |
-| MV_ESTNEG | L | Permite estoque negativo |
-| MV_AESSION | L | Aglutina pedidos na geracao da NF de saida |
-| MV_CLIEDUP | L | Permite duplicidade de CNPJ no cadastro de clientes |
-| MV_LIMCRED | C | Define controle de limite de credito (por cliente ou grupo) |
-| MV_MVCSA1 | L | Habilita cadastro de clientes em MVC (CRMA980) |
-| MV_LJRETVL | N | Criterio de preco com multiplas tabelas ativas (1=menor, 2=maior) |
-| MV_DCSSPD | L | Controle de desconto na geracao de NF |
-| MV_FATTRAV | L | Parametro de travamento no faturamento |
+| MV_BLOQUEI | L | Habilita analise de credito na liberacao de pedidos. Quando .T., submete todas as liberacoes a aprovacao de credito |
+| MV_CREDCLI | C | Define controle de credito por loja (L) ou por cliente (C). Usado na liberacao automatica de credito |
+| MV_DCSSPD | C | Define quais tipos de series de Documentos de Saida sao gerados no bloco F100 do SPED PIS/COFINS |
+| MV_ESTNEG | L | Permite estoque negativo nas rotinas de faturamento e estoque |
+| MV_FATTRAV | C | Parametro de travamento/lock no faturamento. Controla bloqueio de tabelas (SA1, SA2, SB2) durante gravacao de pedidos e geracao de NF |
+| MV_GERABLQ | C | Controla avaliacao de saldo por enderecos/lotes na liberacao. "S"=avalia saldos por endereco e bloqueia se insuficiente. "N"=avalia e exige reducao de quantidade. Funciona em conjunto com MV_GRVBLQ2 |
+| MV_GRVBLQ2 | L | Gera bloqueio de estoque quando nao ha saldo disponivel |
+| MV_LIBNODP | C | Define se avalia credito para pedidos que nao geram duplicata (conforme TES). Conteudo "S" avalia credito mesmo sem geracao de duplicata |
+| MV_LJRETVL | N | Define criterio de preco quando ha mais de uma tabela ativa (1=menor, 2=maior) |
+| MV_MCUSTO | N | Define custo a ser considerado na liberacao |
+| MV_MVCSA1 | L | Habilita novo cadastro de clientes em MVC (CRMA980) |
+| MV_PZRESER | N | Prazo de validade da reserva de estoque (em dias) |
+| MV_RESEST | L | Reserva estoque para pedidos sem credito aprovado. Quando ativo, gera reserva na SC0 mesmo com credito bloqueado |

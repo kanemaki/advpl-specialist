@@ -340,7 +340,6 @@ Permite rastrear a origem dos lancamentos contabeis, identificando qual registro
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_CTLCND | Controle do calendario contabil |
 | MV_CTBPOFF | Habilita bloqueio por processo |
 
 ---
@@ -359,7 +358,6 @@ Permite rastrear a origem dos lancamentos contabeis, identificando qual registro
 |-----------|-----------|
 | MV_MASCARA | Mascara contabil (formato da conta, ex: "??.???.??.???") |
 | MV_CTASUP | Geracao automatica da conta superior |
-| MV_CTBDIG | Digito verificador da conta contabil |
 
 **Pontos de entrada:**
 | Ponto de Entrada | Descricao |
@@ -444,7 +442,6 @@ Permite rastrear a origem dos lancamentos contabeis, identificando qual registro
 | Parametro | Descricao |
 |-----------|-----------|
 | MV_ALTLCTO | Permite alteracao de linhas no lancamento (S/N) |
-| MV_CTLOTE | Controle de numeracao de lotes |
 | MV_LOTECON | Geracao de numero de lote: T=Tabela 09, U=Ultimo+1 |
 
 **Pontos de entrada:**
@@ -498,9 +495,6 @@ Permite rastrear a origem dos lancamentos contabeis, identificando qual registro
 **Parametros relevantes:**
 | Parametro | Descricao |
 |-----------|-----------|
-| MV_CTBLGAP | Gera log de processamento na apuracao (S/N) |
-| MV_TEFCLAP | Tipo de efetivacao: 1=Simples, 2=Detalhada |
-| MV_CTLOTE | Controle de numeracao de lotes |
 
 ---
 
@@ -872,17 +866,9 @@ Permite rastrear a origem dos lancamentos contabeis, identificando qual registro
 | MV_MASCARA | C | Mascara contabil (formato da conta, ex: "??.???.??.???") |
 | MV_MCONTAB | C | Ambiente contabil: CTB=SIGACTB, CON=SIGACON (obsoleto) |
 | MV_CTASUP | C | Geracao automatica da conta superior |
-| MV_CTBDIG | C | Digito verificador da conta contabil |
-| MV_CTLOTE | C | Controle de numeracao de lotes contabeis |
 | MV_LOTECON | C | Geracao de lote: T=Tabela 09, U=Ultimo+1 |
 | MV_ALTLCTO | C | Permite alteracao de lancamentos (S/N) |
 | MV_CT105MS | C | Exibe mensagem na integracao contabil (S/N) |
-| MV_CTBLGAP | C | Gera log na apuracao de resultado (S/N) |
-| MV_TEFCLAP | C | Tipo efetivacao apuracao: 1=Simples, 2=Detalhada |
 | MV_CTBPOFF | C | Habilita bloqueio por processo |
 | MV_CCSUP | C | Geracao automatica do CC superior |
 | MV_TPVALOR | C | Formato de valores nos relatorios contabeis |
-| MV_CTLCND | C | Controle do calendario contabil |
-| MV_MODARQC | C | Modo de arquivo comprovante (CTK) |
-| MV_CTRESIS | L | Restruturacao de saldos contabeis |
-| MV_CTBCOMP | C | Compartilhamento de tabelas no SIGACTB |
