@@ -1,6 +1,6 @@
 # advpl-specialist
 
-![Version](https://img.shields.io/badge/version-1.0.2-blue)
+![Version](https://img.shields.io/badge/version-1.0.3-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Platform](https://img.shields.io/badge/platform-Claude%20Code-blueviolet)
 ![TOTVS](https://img.shields.io/badge/TOTVS-Protheus-orange)
@@ -41,10 +41,13 @@ Repositorio: [https://github.com/thalysjuvenal/advpl-specialist](https://github.
 
 ## Funcionalidades
 
-- **Geracao de codigo** - Funcoes, classes TLPP, MVC, REST APIs, Web Services, pontos de entrada
+- **Geracao de codigo** - Funcoes, classes TLPP, MVC, REST APIs, Web Services, pontos de entrada, TReport, FWFormBrowse, Jobs, Workflow
 - **Migracao ADVPL -> TLPP** - Conversao de codigo procedural para orientado a objetos
 - **Diagnostico de erros** - Analise de erros de compilacao, runtime, performance e locks
+- **Revisao de codigo** - Analise de boas praticas, performance, seguranca e modernizacao
+- **Testes ProBat** - Geracao de testes unitarios para codigo TLPP
 - **Referencia de documentacao** - Funcoes nativas, dicionario SX, APIs REST, parametros MV_*
+- **Processos de negocio** - Consulta de rotinas, tabelas, integracoes e fluxos de 8 modulos ERP
 
 ## Instalacao
 
@@ -92,10 +95,13 @@ Para uma experiencia completa, recomendamos instalar o plugin oficial **superpow
 
 | Comando | Descricao |
 |---------|-----------|
-| `/advpl-specialist:generate` | Gerar codigo ADVPL/TLPP (funcoes, classes, MVC, REST, pontos de entrada) |
+| `/advpl-specialist:generate` | Gerar codigo ADVPL/TLPP (funcoes, classes, MVC, REST, PE, TReport, FWFormBrowse, Jobs, Workflow) |
 | `/advpl-specialist:migrate` | Migrar codigo ADVPL procedural para TLPP orientado a objetos |
 | `/advpl-specialist:diagnose` | Diagnosticar erros e problemas em codigo ADVPL/TLPP |
 | `/advpl-specialist:docs` | Consultar documentacao de funcoes, APIs e dicionario Protheus |
+| `/advpl-specialist:review` | Revisar codigo ADVPL/TLPP (boas praticas, performance, seguranca, modernizacao) |
+| `/advpl-specialist:test` | Gerar testes unitarios ProBat para codigo TLPP |
+| `/advpl-specialist:process` | Consultar processos de negocio, rotinas e integracoes entre modulos |
 
 ### Exemplos
 
@@ -127,15 +133,20 @@ Para uma experiencia completa, recomendamos instalar o plugin oficial **superpow
 | `migrator` | Converte codigo procedural ADVPL para TLPP com classes e namespaces |
 | `debugger` | Diagnostica erros de compilacao, runtime, performance e locks |
 | `docs-reference` | Consulta referencia local + TDN para funcoes, tabelas SX e APIs |
+| `code-reviewer` | Analisa codigo existente para boas praticas, performance, seguranca e modernizacao |
+| `process-consultant` | Consulta processos de negocio, rotinas, tabelas e integracoes entre modulos |
 
 ## Skills
 
 | Skill | Descricao |
 |-------|-----------|
-| `advpl-code-generation` | Padroes e templates para geracao de codigo (MVC, REST, pontos de entrada, classes) |
+| `advpl-code-generation` | Padroes e templates para geracao de codigo (MVC, REST, PE, SOAP, TReport, FWFormBrowse, Jobs, Workflow) |
 | `advpl-to-tlpp-migration` | Regras de conversao, checklist e exemplos before/after |
 | `advpl-debugging` | Top 50 erros comuns, metodologia de debug, dicas de performance |
-| `protheus-reference` | 165+ funcoes nativas, dicionario SX, referencia REST API |
+| `advpl-code-review` | 21 regras de revisao de codigo (boas praticas, performance, seguranca, modernizacao) |
+| `probat-testing` | Framework ProBat para testes unitarios TLPP (annotations, assertions, patterns) |
+| `protheus-reference` | 180+ funcoes nativas, dicionario SX, referencia REST API |
+| `protheus-business` | 8 modulos ERP com tabelas, rotinas, parametros MV_* e integracoes |
 | `embedded-sql` | BeginSQL/EndSQL, macros %table%, %notDel%, %xfilial%, %exp%, column types |
 
 ## Estrutura do Projeto
@@ -150,22 +161,30 @@ advpl-specialist/
 │   │   ├── bug_report.md          # Template para reportar bugs
 │   │   └── feature_request.md     # Template para sugestoes
 │   └── pull_request_template.md   # Template para PRs
-├── agents/                        # 4 agents especializados
+├── agents/                        # 6 agents especializados
 │   ├── code-generator.md
+│   ├── code-reviewer.md
 │   ├── migrator.md
 │   ├── debugger.md
-│   └── docs-reference.md
-├── commands/                      # 4 commands invocaveis
+│   ├── docs-reference.md
+│   └── process-consultant.md
+├── commands/                      # 7 commands invocaveis
 │   ├── generate.md
 │   ├── migrate.md
 │   ├── diagnose.md
-│   └── docs.md
-├── skills/                        # 5 skills com supporting files
-│   ├── advpl-code-generation/     # Padroes MVC, REST, SOAP, PE, classes
+│   ├── docs.md
+│   ├── review.md
+│   ├── test.md
+│   └── process.md
+├── skills/                        # 8 skills com supporting files
+│   ├── advpl-code-generation/     # Padroes MVC, REST, SOAP, PE, TReport, FWFormBrowse, Jobs, Workflow
 │   ├── advpl-to-tlpp-migration/   # Regras e checklist de migracao
 │   ├── advpl-debugging/           # Erros comuns e performance
+│   ├── advpl-code-review/         # 21 regras de revisao de codigo
+│   ├── probat-testing/            # Testes unitarios ProBat (TLPP)
+│   ├── protheus-business/         # 8 modulos ERP (COM, EST, FAT, FIN, CTB, FIS, PCP, MNT)
 │   ├── embedded-sql/              # BeginSQL/EndSQL, macros, patterns
-│   └── protheus-reference/        # Funcoes nativas, SX, REST API
+│   └── protheus-reference/        # 180+ funcoes nativas, SX, REST API
 ├── hooks/                         # SessionStart hook
 │   ├── hooks.json
 │   └── session-start
@@ -181,7 +200,7 @@ advpl-specialist/
 
 O plugin inclui referencia local para consulta rapida:
 
-- **165+ funcoes nativas** documentadas com sintaxe, parametros e exemplos
+- **180+ funcoes nativas** documentadas com sintaxe, parametros e exemplos
 - **9 tabelas SX** (SX1-SX9, SIX) com campos e uso programatico
 - **REST API patterns** completos para WsRestFul e TLPP annotations
 - **50 erros comuns** com causa e solucao
