@@ -3658,3 +3658,559 @@ If lMsErroAuto
     Conout(cLog)
 EndIf
 ```
+
+---
+
+## TReport Classes
+
+### TReport
+
+Class for creating customizable reports, replacing SetPrint, SetDefault, RptStatus, and Cabec functions.
+
+**Syntax:** `TReport():New( cReport, cTitle, uParam, bAction, cDescription, lLandscape, uTotalText, lTotalInLine, cPageTText, lPageTInLine, lTPageBreak, nColSpace ) --> oReport`
+
+| Param | Type | Description |
+|-------|------|-------------|
+| cReport | C | Report identifier name (e.g., "MATR010") |
+| cTitle | C | Report title |
+| uParam | C/B | Parameter group from SX1 dictionary, or code block for custom parameters |
+| bAction | B | Code block executed when user confirms printing |
+| cDescription | C | Report description |
+| lLandscape | L | .T. for landscape orientation (default: .F. portrait) |
+| uTotalText | C/B | Report totalizer text (character or code block) |
+| lTotalInLine | L | .T. to print totalizer cells in line |
+| cPageTText | C | Page totalizer text |
+| lPageTInLine | L | .T. to print page totalizer in line |
+| lTPageBreak | L | .T. for page break after printing totalizer |
+| nColSpace | N | Spacing between columns |
+
+**Return:** O - TReport object.
+
+**Key methods:** `SetPortrait()`, `SetLandscape()`, `SetTotalInLine(l)`, `SetLineHeight(n)`, `PrintDialog()`.
+
+**Example:**
+```advpl
+#Include "TOTVS.CH"
+#Include "rptdef.ch"
+
+Local oReport  := NIL
+Local oSection := NIL
+
+oReport := TReport():New("MATR010", "Customer Report", "MTR010", ;
+    {|oReport| oSection:Print()}, "Customer listing report")
+
+oSection := TRSection():New(oReport, "Customers", {"SA1"})
+
+TRCell():New(oSection, "A1_COD",  "SA1", "Code")
+TRCell():New(oSection, "A1_NOME", "SA1", "Name")
+
+oReport:PrintDialog()
+```
+
+---
+
+### TRSection
+
+Defines a section within a TReport, representing a data grouping tied to one or more tables.
+
+**Syntax:** `TRSection():New( oParent, cTitle, uTable, aOrder, lLoadCells, lLoadOrder, uTotalText, lTotalInLine, lHeaderPage, lHeaderBreak, lPageBreak, lLineBreak, nLeftMargin, lLineStyle, nColSpace, lAutoSize ) --> oSection`
+
+| Param | Type | Description |
+|-------|------|-------------|
+| oParent | O | Parent TReport object (or parent TRSection for sub-sections) |
+| cTitle | C | Section title |
+| uTable | C/A | Table alias or array of aliases (first is the main processing table) |
+| aOrder | A | Array of index order descriptions (converted to TROrder objects) |
+| lLoadCells | L | .T. to automatically load cells from the data dictionary |
+| lLoadOrder | L | .T. to automatically load orders from the data dictionary |
+| uTotalText | C/B | Totalizer text (character or code block) |
+| lTotalInLine | L | .T. to print totalizer in line |
+| lHeaderPage | L | .T. to print header on every page |
+| lHeaderBreak | L | .T. to print header on break |
+| lPageBreak | L | .T. for page break between groups |
+| lLineBreak | L | .T. for line break |
+| nLeftMargin | N | Left margin |
+| lLineStyle | L | .T. to enable line style |
+| nColSpace | N | Column spacing |
+| lAutoSize | L | .T. to auto-size columns |
+
+**Return:** O - TRSection object.
+
+**Key methods:** `Init()`, `Print()`, `PrintLine()`, `Finish()`, `SetTotalInLine(l)`.
+
+**Example:**
+```advpl
+Local oSection := TRSection():New(oReport, "Customers", {"SA1"}, ;
+    {"By Code", "By Name"})
+
+TRCell():New(oSection, "A1_COD",  "SA1", "Code")
+TRCell():New(oSection, "A1_NOME", "SA1", "Name")
+```
+
+---
+
+### TRCell
+
+Defines a printing cell (column) within a TRSection.
+
+**Syntax:** `TRCell():New( oSection, cField, cAlias, cTitle, cPicture, nSize, lPixel, bBlock, cAlign, lLineBreak, cHeaderAlign, lCellBreak, nColSpace, lAutoSize, nClrBack, nClrFore, lBold ) --> oCell`
+
+| Param | Type | Description |
+|-------|------|-------------|
+| oSection | O | Parent TRSection object |
+| cField | C | Field name |
+| cAlias | C | Table alias |
+| cTitle | C | Column header title |
+| cPicture | C | Picture format mask |
+| nSize | N | Column width |
+| lPixel | L | .T. to use pixel sizing |
+| bBlock | B | Code block for custom printing |
+| cAlign | C | Cell alignment ("LEFT", "CENTER", "RIGHT") |
+| lLineBreak | L | .T. to break line after cell |
+| cHeaderAlign | C | Header alignment |
+| lCellBreak | L | .T. to break cell content |
+| nColSpace | N | Column spacing |
+| lAutoSize | L | .T. for auto-sizing |
+| nClrBack | N | Background color |
+| nClrFore | N | Foreground color |
+| lBold | L | .T. for bold text |
+
+**Return:** O - TRCell object.
+
+**Example:**
+```advpl
+TRCell():New(oSection, "A1_COD",  "SA1", "Code",, 50)
+TRCell():New(oSection, "A1_NOME", "SA1", "Name",, 200)
+TRCell():New(oSection, "A1_TIPO", "SA1", "Type",, 30,,,, .T.) // Line break after
+```
+
+---
+
+### TRFunction
+
+Creates a totalizer/aggregation function attached to a TRCell. Inherits from TRCell.
+
+**Syntax:** `TRFunction():New( oCell, cField, cFunction, oBreak, cFormula, cPicture ) --> oFunction`
+
+| Param | Type | Description |
+|-------|------|-------------|
+| oCell | O | Target TRCell object for the totalizer |
+| cField | C | Field name to aggregate (NIL to use the cell's field) |
+| cFunction | C | Aggregation type: "SUM", "COUNT", "AVG", "MAX", "MIN" |
+| oBreak | O | TRBreak object defining where to print the total (NIL for grand total) |
+| cFormula | C | Custom formula expression |
+| cPicture | C | Picture format for the result |
+
+**Return:** O - TRFunction object.
+
+**Example:**
+```advpl
+// Sum the A1_SALDO field at the end of the report
+TRFunction():New(oCell, NIL, "SUM",, , "@E 999,999,999.99")
+
+// Count records with a break
+TRFunction():New(oCell, NIL, "COUNT", oBreak)
+```
+
+---
+
+### TRBreak
+
+Defines a break point in a TRSection for grouping and subtotaling.
+
+**Syntax:** `TRBreak():New( oSection, oCell, cLabel, lPageBreak ) --> oBreak`
+
+| Param | Type | Description |
+|-------|------|-------------|
+| oSection | O | Parent TRSection object |
+| oCell | O | TRCell that triggers the break (grouping field) |
+| cLabel | C/B | Break label/description (character or code block) |
+| lPageBreak | L | .T. for page break on group change |
+
+**Return:** O - TRBreak object.
+
+**Example:**
+```advpl
+// Break by customer type
+Local oCellType := TRCell():New(oSection, "A1_TIPO", "SA1", "Type")
+Local oBreak    := TRBreak():New(oSection, oCellType, "Subtotal by Type", .F.)
+
+// Sum with break
+TRFunction():New(oCellSaldo, NIL, "SUM", oBreak)
+```
+
+---
+
+## FWFormBrowse / FWMBrowse Classes
+
+### FWMBrowse
+
+Class providing a grid browse object with side buttons and column details based on the data dictionary. Used in MVC interfaces.
+
+**Syntax:** `FWMBrowse():New() --> oBrowse`
+
+**Return:** O - FWMBrowse object.
+
+**Key methods:**
+
+| Method | Syntax | Description |
+|--------|--------|-------------|
+| SetAlias | `SetAlias( cAlias )` | Sets the table alias for the browse |
+| SetDescription | `SetDescription( cTitle )` | Sets the browse window title |
+| AddLegend | `AddLegend( cCondition, cColor, cLabel )` | Adds a colored status legend |
+| SetFilterDefault | `SetFilterDefault( cFilter )` | Sets initial data filter |
+| DisableDetails | `DisableDetails()` | Removes detail view option |
+| Activate | `Activate()` | Displays and enables the browse |
+
+**Example:**
+```advpl
+#Include "TOTVS.CH"
+
+User Function MyBrowse()
+    Local oBrowse := FWMBrowse():New()
+
+    oBrowse:SetAlias("SA1")
+    oBrowse:SetDescription("Customer Browse")
+    oBrowse:AddLegend("SA1->A1_MSBLQL == '1'", "BR_VERMELHO", "Blocked")
+    oBrowse:AddLegend("SA1->A1_MSBLQL != '1'", "BR_VERDE",    "Active")
+    oBrowse:Activate()
+Return
+```
+
+---
+
+### FWFormBrowse
+
+Class providing a grid-type object with side buttons and column details. Similar to FWMBrowse but with additional form integration capabilities.
+
+**Syntax:** `FWFormBrowse():New() --> oFormBrowse`
+
+**Return:** O - FWFormBrowse object.
+
+**Key methods:**
+
+| Method | Syntax | Description |
+|--------|--------|-------------|
+| SetOwner | `SetOwner( oDialog )` | Sets the parent dialog |
+| AddButton | `AddButton( cTitle, bAction, cParam, cOption, bVerify )` | Adds a side button |
+| Activate | `Activate( [oOwner] )` | Activates the browse |
+
+**Example:**
+```advpl
+Local oFormBrowse := FWFormBrowse():New()
+oFormBrowse:SetOwner(oDlg)
+oFormBrowse:Activate()
+```
+
+---
+
+### FWFormStruct
+
+Function that provides an object with data dictionary metadata structures, used by MVC Model and View classes.
+
+**Syntax:** `FWFormStruct( nType, cAlias, bFilter ) --> oStruct`
+
+| Param | Type | Description |
+|-------|------|-------------|
+| nType | N | Structure type: 1 = Model (FWFormModelStruct), 2 = View (FWFormViewStruct) |
+| cAlias | C | Table alias from the data dictionary (SX2) |
+| bFilter | B | Code block for filtering fields from SX3 (optional) |
+
+**Return:** O - Structure object (FWFormModelStruct or FWFormViewStruct).
+
+**Example:**
+```advpl
+// Model structure with all fields
+Local oModelStruct := FWFormStruct(1, "SA1")
+
+// View structure with all fields
+Local oViewStruct := FWFormStruct(2, "SA1")
+
+// Model structure filtering specific fields
+Local oFiltered := FWFormStruct(1, "SA1", ;
+    {|cCampo| Alltrim(cCampo) $ "A1_COD,A1_LOJA,A1_NOME,A1_TIPO"})
+```
+
+---
+
+## Jobs / Multi-Threading Functions
+
+### StartJob
+
+Executes an ADVPL function on a new thread (without interface).
+
+**Syntax:** `StartJob( cFuncName, cEnvironment, lWait [, xParam1, xParam2, ..., xParam25] ) --> lSuccess`
+
+| Param | Type | Description |
+|-------|------|-------------|
+| cFuncName | C | Name of the function to execute (e.g., "u_MyJob") |
+| cEnvironment | C | Environment name (typically from GetEnvServer()) |
+| lWait | L | .T. to wait for the job to finish, .F. to run asynchronously |
+| xParam1..25 | U | Optional parameters passed to the function (up to 25) |
+
+**Return:** L - .T. if the job was started successfully, .F. otherwise.
+
+**Example:**
+```advpl
+// Asynchronous job
+StartJob("u_ProcessBatch", GetEnvServer(), .F., "SA1", Date())
+
+// Synchronous job (waits for completion)
+Local lOk := StartJob("u_GenerateReport", GetEnvServer(), .T., cReportId)
+If !lOk
+    Conout("Job failed to start")
+EndIf
+```
+
+---
+
+### RpcSetEnv
+
+Opens and initializes the Protheus environment in background threads or automated routines. Required when using StartJob.
+
+**Syntax:** `RpcSetEnv( cEmpresa, cFilial, cUser, cPassword, cModule, cFunName, aTables, lShowFinal, lAbend, lOpenSX, lConnect ) --> lSuccess`
+
+| Param | Type | Description |
+|-------|------|-------------|
+| cEmpresa | C | Company code (e.g., "99") |
+| cFilial | C | Branch code (e.g., "01") |
+| cUser | C | User login (optional) |
+| cPassword | C | User password (optional) |
+| cModule | C | Connection module (default: "FAT") |
+| cFunName | C | Function name for logging (default: "RPC") |
+| aTables | A | Array of table aliases to open immediately (optional) |
+| lShowFinal | L | .T. to control lMsFinalAuto variable |
+| lAbend | L | .T. to show error on license validation failure |
+| lOpenSX | L | .T. to open dictionary tables from SM0 |
+| lConnect | L | .T. to connect to database server |
+
+**Return:** L - .T. if the environment was successfully prepared.
+
+**Example:**
+```advpl
+User Function MyJob(cParam)
+    Local lEnv := .F.
+
+    lEnv := RpcSetEnv("99", "01")
+    If !lEnv
+        Conout("Failed to open environment")
+        Return
+    EndIf
+
+    // Process data here...
+    DbSelectArea("SA1")
+    DbSetOrder(1)
+    DbGoTop()
+    While !Eof()
+        // ...
+        DbSkip()
+    EndDo
+
+    RpcClearEnv()
+Return
+```
+
+---
+
+### RpcClearEnv
+
+Releases the environment opened by RpcSetEnv, freeing the license and closing connections.
+
+**Syntax:** `RpcClearEnv() --> NIL`
+
+**Return:** NIL
+
+**Example:**
+```advpl
+RpcSetEnv("99", "01")
+// ... perform operations ...
+RpcClearEnv() // Always call after RpcSetEnv when done
+```
+
+> **Note:** It is not necessary to call RpcClearEnv() after a StartJob(), since the thread is fully finalized upon its return.
+
+---
+
+### LockByName
+
+Creates a named semaphore (lock) on the license server to prevent concurrent execution of routines.
+
+**Syntax:** `LockByName( cName, lEmpresa, lFilial ) --> lCreated`
+
+| Param | Type | Description |
+|-------|------|-------------|
+| cName | C | Semaphore name identifier |
+| lEmpresa | L | .T. to scope the lock by company |
+| lFilial | L | .T. to scope the lock by branch |
+
+**Return:** L - .T. if the semaphore was created successfully, .F. if it already exists.
+
+**Example:**
+```advpl
+If !LockByName("MY_BATCH_PROCESS", .T., .F.)
+    MsgAlert("Another user is already running this process!")
+    Return
+EndIf
+
+// Execute exclusive routine
+ProcessBatch()
+
+UnlockByName("MY_BATCH_PROCESS", .T., .F.)
+```
+
+---
+
+### UnlockByName
+
+Releases a named semaphore previously created by LockByName.
+
+**Syntax:** `UnlockByName( cName, lEmpresa, lFilial ) --> NIL`
+
+| Param | Type | Description |
+|-------|------|-------------|
+| cName | C | Semaphore name identifier (must match LockByName) |
+| lEmpresa | L | .T. if the lock was scoped by company |
+| lFilial | L | .T. if the lock was scoped by branch |
+
+**Return:** NIL
+
+**Example:**
+```advpl
+// Always release the lock after processing
+LockByName("IMPORT_ROUTINE", .T., .T.)
+// ... process ...
+UnlockByName("IMPORT_ROUTINE", .T., .T.)
+```
+
+---
+
+## Email Classes
+
+### TMailManager
+
+Class for managing email server communication (SMTP/POP3). Handles connection, authentication, and email transmission.
+
+**Syntax:** `TMailManager():New() --> oServer`
+
+**Return:** O - TMailManager object.
+
+**Key methods:**
+
+| Method | Syntax | Description |
+|--------|--------|-------------|
+| Init | `Init( cPopAddr, cSmtpAddr, cUser, cPass, nPopPort, nSmtpPort )` | Initializes server connection parameters |
+| SetUseSSL | `SetUseSSL( lSSL )` | Enables/disables SSL encryption |
+| SetUseTLS | `SetUseTLS( lTLS )` | Enables/disables TLS encryption |
+| SetSMTPTimeout | `SetSMTPTimeout( nTimeout )` | Sets SMTP connection timeout in seconds |
+| SmtpConnect | `SmtpConnect() --> nError` | Connects to the SMTP server (0 = success) |
+| SmtpAuth | `SmtpAuth( cUser, cPass ) --> nError` | Authenticates with SMTP server |
+| SendMail | `SendMail( oMessage ) --> nError` | Sends an email message |
+| SmtpDisconnect | `SmtpDisconnect() --> nError` | Disconnects from SMTP server |
+| GetErrorString | `GetErrorString( nError ) --> cError` | Returns error description |
+
+**Example:**
+```advpl
+Local oServer  := TMailManager():New()
+Local oMessage := TMailMessage():New()
+Local nErr     := 0
+
+// Configure server
+oServer:SetUseSSL(.T.)
+oServer:Init("", "smtp.gmail.com", "user@gmail.com", "password", 0, 465)
+
+// Connect
+nErr := oServer:SmtpConnect()
+If nErr != 0
+    Conout("SMTP Error: " + oServer:GetErrorString(nErr))
+    Return
+EndIf
+
+// Authenticate
+nErr := oServer:SmtpAuth("user@gmail.com", "password")
+
+// Build message
+oMessage:Clear()
+oMessage:cFrom    := "user@gmail.com"
+oMessage:cTo      := "recipient@company.com"
+oMessage:cSubject := "Report Ready"
+oMessage:cBody    := "The monthly report is attached."
+
+// Send
+nErr := oServer:SendMail(oMessage)
+If nErr != 0
+    Conout("Send Error: " + oServer:GetErrorString(nErr))
+EndIf
+
+oServer:SmtpDisconnect()
+```
+
+---
+
+### TMailMessage
+
+Class representing an email message. Used together with TMailManager for composing and sending emails.
+
+**Syntax:** `TMailMessage():New() --> oMessage`
+
+**Return:** O - TMailMessage object.
+
+**Key properties:**
+
+| Property | Type | Description |
+|----------|------|-------------|
+| cFrom | C | Sender email address |
+| cTo | C | Recipient email address(es) |
+| cCc | C | Carbon copy recipient(s) |
+| cBcc | C | Blind carbon copy recipient(s) |
+| cSubject | C | Email subject |
+| cBody | C | Email body content (plain text or HTML) |
+
+**Key methods:**
+
+| Method | Syntax | Description |
+|--------|--------|-------------|
+| Clear | `Clear()` | Resets the message object |
+| AttachFile | `AttachFile( cFilePath )` | Attaches a file to the message |
+| Send | `Send( oServer )` | Sends the message using a TMailManager instance |
+
+**Example:**
+```advpl
+Local oMessage := TMailMessage():New()
+
+oMessage:Clear()
+oMessage:cFrom    := "system@company.com"
+oMessage:cTo      := "manager@company.com"
+oMessage:cCc      := "team@company.com"
+oMessage:cSubject := "Invoice #" + cInvoice
+oMessage:cBody    := "<html><body><h1>Invoice Generated</h1></body></html>"
+oMessage:AttachFile("\reports\invoice_" + cInvoice + ".pdf")
+```
+
+---
+
+## Legacy / Compatibility Functions
+
+### StaticCall
+
+Executes a Static Function from another source file. Legacy feature, not supported in TLPP.
+
+**Syntax:** `StaticCall( ProgramName, FunctionName [, xParam1, ..., xParamN] ) --> xResult`
+
+| Param | Type | Description |
+|-------|------|-------------|
+| ProgramName | - | Program name containing the Static Function (literal, no quotes) |
+| FunctionName | - | Static Function name to execute (literal, no quotes) |
+| xParam1..N | U | Parameters to pass to the function |
+
+**Return:** U - Return value from the executed Static Function.
+
+> **Warning:** StaticCall is inhibited in TLPP. For TLPP migration, refactor to use public functions or namespaced calls instead.
+
+**Example:**
+```advpl
+// Call a Static Function from another program
+Local aMenu := StaticCall(MATA030, MenuDef)
+
+// Call with parameters
+Local xRet := StaticCall(MyProgram, MyStaticFunc, "param1", 42)
+```
