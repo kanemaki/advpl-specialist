@@ -1,10 +1,10 @@
 {
   "name": "advpl-specialist",
-  "description": "Especialista em ADVPL e TLPP para desenvolvimento TOTVS Protheus - geracao de codigo, migracao, debug e documentacao",
-  "version": "1.0.3",
+  "description": "Especialista em ADVPL e TLPP para desenvolvimento TOTVS Protheus e consultoria funcional - geracao de codigo, migracao, debug, documentacao e configuracao de dicionario",
+  "version": "1.0.4",
   "author": { "name": "Thalys Augusto" },
   "license": "MIT",
   "homepage": "https://github.com/thalysjuvenal/advpl-specialist",
   "repository": "https://github.com/thalysjuvenal/advpl-specialist",
-  "keywords": ["advpl", "tlpp", "protheus", "totvs", "erp", "code-generation", "migration", "debugging", "claude-code-plugin"]
+  "keywords": ["advpl", "tlpp", "protheus", "totvs", "erp", "code-generation", "migration", "debugging", "refactoring", "documentation", "changelog", "dictionary", "claude-code-plugin"]
 }
