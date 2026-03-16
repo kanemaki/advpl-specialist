@@ -1,12 +1,12 @@
 # advpl-specialist
 
-![Version](https://img.shields.io/badge/version-1.0.3-blue)
+![Version](https://img.shields.io/badge/version-1.0.4-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Platform](https://img.shields.io/badge/platform-Claude%20Code-blueviolet)
 ![TOTVS](https://img.shields.io/badge/TOTVS-Protheus-orange)
 ![ADVPL](https://img.shields.io/badge/lang-ADVPL%20%7C%20TLPP-yellow)
 
-Plugin para Claude Code especializado em **ADVPL** e **TLPP** para desenvolvimento no ecossistema **TOTVS Protheus**.
+Plugin para Claude Code especializado em **ADVPL** e **TLPP** para desenvolvimento no ecossistema **TOTVS Protheus** — para **desenvolvedores** e **consultores funcionais**.
 
 ## Indice
 
@@ -41,6 +41,8 @@ Repositorio: [https://github.com/thalysjuvenal/advpl-specialist](https://github.
 
 ## Funcionalidades
 
+### Para Desenvolvedores
+
 - **Geracao de codigo** - Funcoes, classes TLPP, MVC, REST APIs, Web Services, pontos de entrada, TReport, FWFormBrowse, Jobs, Workflow
 - **Migracao ADVPL -> TLPP** - Conversao de codigo procedural para orientado a objetos
 - **Diagnostico de erros** - Analise de erros de compilacao, runtime, performance e locks
@@ -48,6 +50,16 @@ Repositorio: [https://github.com/thalysjuvenal/advpl-specialist](https://github.
 - **Testes ProBat** - Geracao de testes unitarios para codigo TLPP
 - **Referencia de documentacao** - Funcoes nativas, dicionario SX, APIs REST, parametros MV_*
 - **Processos de negocio** - Consulta de rotinas, tabelas, integracoes e fluxos de 8 modulos ERP
+- **Explicacao de codigo** - Explicacao em linguagem simples com niveis junior, senior e funcional
+- **Refatoracao** - Sugestoes de melhoria de estrutura com 6 padroes (RF-001 a RF-006)
+- **Documentacao automatica** - Cabecalho Protheus.doc, documentacao completa e documentacao de API
+- **Changelog** - Geracao de changelog a partir do git diff com classificacao de impacto
+
+### Para Consultores Funcionais
+
+- **Explicacao de codigo** - Nivel funcional: entenda customizacoes sem ler codigo
+- **Geracao de dicionario SX** - Descreva campos em linguagem natural e gere scripts SX3, SIX, SX1, SX5 e SX7
+- **Changelog** - Documento de mudancas pronto para entregar ao cliente
 
 ## Instalacao
 
@@ -102,6 +114,11 @@ Para uma experiencia completa, recomendamos instalar o plugin oficial **superpow
 | `/advpl-specialist:review` | Revisar codigo ADVPL/TLPP (boas praticas, performance, seguranca, modernizacao) |
 | `/advpl-specialist:test` | Gerar testes unitarios ProBat para codigo TLPP |
 | `/advpl-specialist:process` | Consultar processos de negocio, rotinas e integracoes entre modulos |
+| `/advpl-specialist:explain` | Explicar codigo em linguagem simples (nivel junior, senior ou funcional) |
+| `/advpl-specialist:refactor` | Sugerir refatoracoes de estrutura sem mudar comportamento |
+| `/advpl-specialist:document` | Gerar documentacao tecnica automatica (header, full, api) |
+| `/advpl-specialist:changelog` | Gerar changelog formatado a partir do git diff |
+| `/advpl-specialist:sxgen` | Gerar scripts de dicionario SX a partir de descricao em linguagem natural |
 
 ### Exemplos
 
@@ -123,6 +140,21 @@ Para uma experiencia completa, recomendamos instalar o plugin oficial **superpow
 
 # Consultar documentacao de funcao
 /advpl-specialist:docs FWExecView
+
+# Explicar codigo para consultor funcional
+/advpl-specialist:explain src/MATA461.prw --level funcional
+
+# Sugerir refatoracoes
+/advpl-specialist:refactor src/FATA001.prw
+
+# Gerar documentacao completa
+/advpl-specialist:document src/MATA461.prw --type full
+
+# Gerar changelog desde uma data
+/advpl-specialist:changelog --since 2026-03-01 --format markdown
+
+# Gerar script de dicionario SX3
+/advpl-specialist:sxgen --type sx3
 ```
 
 ## Agents
@@ -135,6 +167,10 @@ Para uma experiencia completa, recomendamos instalar o plugin oficial **superpow
 | `docs-reference` | Consulta referencia local + TDN para funcoes, tabelas SX e APIs |
 | `code-reviewer` | Analisa codigo existente para boas praticas, performance, seguranca e modernizacao |
 | `process-consultant` | Consulta processos de negocio, rotinas, tabelas e integracoes entre modulos |
+| `refactorer` | Analisa codigo e sugere refatoracoes de estrutura com before/after |
+| `doc-generator` | Gera documentacao tecnica automatica a partir do codigo-fonte |
+| `changelog-generator` | Analisa git diff e gera changelog formatado com classificacao de impacto |
+| `sx-configurator` | Gera scripts de dicionario SX a partir de descricao em linguagem natural |
 
 ## Skills
 
@@ -148,6 +184,11 @@ Para uma experiencia completa, recomendamos instalar o plugin oficial **superpow
 | `protheus-reference` | 180+ funcoes nativas, dicionario SX, referencia REST API |
 | `protheus-business` | 8 modulos ERP com tabelas, rotinas, parametros MV_* e integracoes |
 | `embedded-sql` | BeginSQL/EndSQL, macros %table%, %notDel%, %xfilial%, %exp%, column types |
+| `code-explanation` | Metodologia de explicacao de codigo com 3 niveis de audiencia |
+| `advpl-refactoring` | 6 padroes de refatoracao com before/after e regras de seguranca |
+| `documentation-patterns` | Templates para Protheus.doc header, documentacao completa e API REST |
+| `changelog-patterns` | Tipos de mudanca, niveis de impacto e formatos markdown/texto |
+| `sx-configuration` | Definicoes completas SX3/SIX/SX1/SX5/SX7 com validacoes e pictures |
 
 ## Estrutura do Projeto
 
@@ -161,22 +202,31 @@ advpl-specialist/
 │   │   ├── bug_report.md          # Template para reportar bugs
 │   │   └── feature_request.md     # Template para sugestoes
 │   └── pull_request_template.md   # Template para PRs
-├── agents/                        # 6 agents especializados
+├── agents/                        # 10 agents especializados
 │   ├── code-generator.md
 │   ├── code-reviewer.md
 │   ├── migrator.md
 │   ├── debugger.md
 │   ├── docs-reference.md
-│   └── process-consultant.md
-├── commands/                      # 7 commands invocaveis
+│   ├── process-consultant.md
+│   ├── refactorer.md
+│   ├── doc-generator.md
+│   ├── changelog-generator.md
+│   └── sx-configurator.md
+├── commands/                      # 12 commands invocaveis
 │   ├── generate.md
 │   ├── migrate.md
 │   ├── diagnose.md
 │   ├── docs.md
 │   ├── review.md
 │   ├── test.md
-│   └── process.md
-├── skills/                        # 8 skills com supporting files
+│   ├── process.md
+│   ├── explain.md
+│   ├── refactor.md
+│   ├── document.md
+│   ├── changelog.md
+│   └── sxgen.md
+├── skills/                        # 14 skills com supporting files
 │   ├── advpl-code-generation/     # Padroes MVC, REST, SOAP, PE, TReport, FWFormBrowse, Jobs, Workflow
 │   ├── advpl-to-tlpp-migration/   # Regras e checklist de migracao
 │   ├── advpl-debugging/           # Erros comuns e performance
@@ -184,7 +234,12 @@ advpl-specialist/
 │   ├── probat-testing/            # Testes unitarios ProBat (TLPP)
 │   ├── protheus-business/         # 8 modulos ERP (COM, EST, FAT, FIN, CTB, FIS, PCP, MNT)
 │   ├── embedded-sql/              # BeginSQL/EndSQL, macros, patterns
-│   └── protheus-reference/        # 180+ funcoes nativas, SX, REST API
+│   ├── protheus-reference/        # 180+ funcoes nativas, SX, REST API
+│   ├── code-explanation/          # Explicacao de codigo com 3 niveis de audiencia
+│   ├── advpl-refactoring/         # 6 padroes de refatoracao com before/after
+│   ├── documentation-patterns/    # Templates Protheus.doc, documentacao completa, API
+│   ├── changelog-patterns/        # Tipos de mudanca, impacto, formatos
+│   └── sx-configuration/          # Dicionario SX3/SIX/SX1/SX5/SX7 completo
 ├── hooks/                         # SessionStart hook
 │   ├── hooks.json
 │   └── session-start
